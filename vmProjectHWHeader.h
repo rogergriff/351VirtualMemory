@@ -5,10 +5,12 @@ class HW{
 class MMU: public HW{
 }
 
+class PageFault: public MMU{
+};
 class Word: public HW{
 };
 
-class Adr: public HW{
+class Adr: public Word{
 };
 
 class BS:public HW{
