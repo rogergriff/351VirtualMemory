@@ -2,18 +2,18 @@
 class HW{
 };
 
-class MMU: public HW{
+class MMU: public HW{ //Memory Management Unit
 }
 
-class PageFault: public MMU{
+class PageFault: public MMU{ 
 };
 class Word: public HW{
 };
 
-class Adr: public Word{
+class Adr: public Word{ //Address
 };
 
-class BS:public HW{
+class BS:public HW{ //Backing Store
 };
 
 class RAM: public HW{
