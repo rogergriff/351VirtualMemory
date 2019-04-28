@@ -1,6 +1,16 @@
+#ifndef OS_H
+#define OS_H
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+/*
 //this will be the header file for the OS part our project
 class OS{
-};
+
+}; */
+
 class PRA: public OS{ //Page replacement algorithm
 private:
   int options(); //use this to get the type of PRA wanted at run-time, so something like "what page replacemnt algorithm do you want to use, 1 for fifo or 2 for lru
@@ -53,3 +63,5 @@ struct PTE: public OS{ //Page Table Entry
 struct PCB: public OS{ //Process control block
   PTE myPageTable[256];
 };
+
+#endif
