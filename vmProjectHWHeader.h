@@ -37,14 +37,26 @@ Word frame();
 Word page();  //
 };
 
-class BS:public HW{ //Backing Store
-private:
-  BS(); //constructor
-  media
+//Backing Store
+class BackingStore{
+	private: 
+		BackingStore();
+		
+	public:
+BackingStore();
+~BackingStore();  //destructor
+
+BackingStore instance();  /*  in main.cpp:
+ 			BS BS::instance(  ){} */
+
+BackingStore operator=();
+void read(char);
 };
 
-class RAM: public HW{
-};
-
-class status: public RAM{
-};
+class RAM{
+	private:
+		RAM();
+		int frameSize;
+	public:
+		RAM();
+RAM instance();
