@@ -1,40 +1,64 @@
-//header file for the hardware portion
-class HW{
-};
+#ifndef HARDWARE_H
+#define HARDWARE_H
+#include <iostream>
+#include <fstream>
+using namespace std;
 
-class MMU: public HW{ //Memory Management Unit
-private:
-  int page_acc_count;
-  int page_faults;
-  tlb; //The actual tlb i think
-  int tlb_acc_count; //how many times accessed
-  int tlb_faults; //how many faults
-public:
-  void clearTLB(); // clears the TLB
-  instance(); // ??? no idea what it does, but its on the hints, maybe creates tlb?
-  MMU(); // constructor
-  void pageAccesses(); //how many pages were accessed? pretty sure a simple cout
-  void pageFaults(); //how many page faults where there? pretty sure a simple cout
-  read<T>;//read from standard input the 32 bit integer numbers that represent logical addresses 
-  tlbAccesses(); //how many times did the TLB get accessed? pretty sure just a simple cout
-  tlbFaults(); //how many times was there a fault accessing?  ^
+//header file for the hardware portion
+/*class HW{
+	private: 
+
+	public:
+};*/
+
+// Memory Management Unit
+class MemoryManagementUnit{ 
+ 	private:
+		MemoryManagementUnit();
+		int Page_AccCount;
+		int Page_Faults;
+		//tlb_ :TLB
+		int TLB_AccCount;
+		int TLB_Faults;
+
+	public:
+		void clearTLB();
+		MemoryManagementUnit();
+		MemoryManagementUnit(char, char);
+		MemoryManagementUnit instance();
+		MemoryManagementUnit operator=();
+		pageAccesses();
+		pageFaults();
+		//void read<T>();
+		TLB_Accesses();
+		TLB_Faults();
 }
 
 class PageFault: public MMU{ 
-public:
-  PageFault();
-  Word pageNumber;
-};
-struct Word: public HW{
-  int uint32_t(); // make the value i think?
-  uint32_t value;
+	// private:
+	public:
+		PageFault();
+		Word pageNumber;
 };
 
-struct Adr: public Word{ //Address
-Word Adr(); //implement it
-Word displacement();
+
+
+// Word
+class Word{
+	public:
+		int unit;
+		unit value_t;
+};
+
+
+//Address
+class Address: public Word{ 
+public: 
+Word address();
+Word displacement()
 Word frame();
-Word page();  //
+Word page();		
+
 };
 
 //Backing Store
@@ -60,3 +84,14 @@ class RAM{
 	public:
 		RAM();
 RAM instance();
+		RAM operator=();
+		void read<T>();
+		Status arrStatus < Status, frameSize >
+};
+
+struct Status{
+	bool accessed;
+	Bool dirty;
+}
+ 
+#endif
