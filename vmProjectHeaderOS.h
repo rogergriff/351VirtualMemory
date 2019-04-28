@@ -2,20 +2,54 @@
 class OS{
 };
 class PRA: public OS{ //Page replacement algorithm
+private:
+  int options(); //use this to get the type of PRA wanted at run-time, so something like "what page replacemnt algorithm do you want to use, 1 for fifo or 2 for lru
+protected:
+    PRA(); //constructor for class
+public:
+ ~PRA(); //destructor
+ Word findVictim();
+ getPRA();
+ updateUsage();
 };
 
 
-class FIFO: public PRA{
+struct FIFO: public PRA{
+public:
+  Word findVictim();
+  FIFO(); //constructor
+  
+private:
+  Word front; //what's at the front and will therefore be booted next when it's full.
 };
 
-class LRU: public PRA{
+struct LRU: public PRA{
+public:
+  Word findVictim();
+  LRU();
+  void updateUsage();
+  
+private:
+  LRUList;
 };
 
 class MM: public OS{ //Memory Manager for OS
+private:
+  freeFrames(); //which frames are free, if any??
+  MM(); //constructor??
+  PCB pageTable;
+public:
+  MM(); //constructor creates pcb
+  instance();//?
+  operator=();//?
+  void pageIn(pageTable); //bring in page via demand paging, see 10.2 in book
 };
 
-class PTE: public OS{ //Page Table Entry
+struct PTE: public OS{ //Page Table Entry
+  unsigned char frameNumber;
+  bool valid;
 };
 
-class PCB: public OS{ //Process control block
+struct PCB: public OS{ //Process control block
+  PTE myPageTable[256];
 };
