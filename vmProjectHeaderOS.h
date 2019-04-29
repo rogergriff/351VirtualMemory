@@ -11,7 +11,7 @@ class OS{
 
 }; */
 
-class PRA: public OS{ //Page replacement algorithm
+class PRA{ //Page replacement algorithm
 private:
   int options(); //use this to get the type of PRA wanted at run-time, so something like "what page replacemnt algorithm do you want to use, 1 for fifo or 2 for lru
 protected:
@@ -43,7 +43,7 @@ private:
   LRUList;
 };
 
-class MM: public OS{ //Memory Manager for OS
+class MM{ //Memory Manager for OS
 private:
   freeFrames(); //which frames are free, if any??
   MM(); //constructor??
@@ -55,12 +55,12 @@ public:
   void pageIn(pageTable); //bring in page via demand paging, see 10.2 in book
 };
 
-struct PTE: public OS{ //Page Table Entry
+struct PTE{ //Page Table Entry
   unsigned char frameNumber;
   bool valid;
 };
 
-struct PCB: public OS{ //Process control block
+struct PCB{ //Process control block
   PTE myPageTable[256];
 };
 
