@@ -4,12 +4,6 @@
 #include <fstream>
 using namespace std;
 
-//header file for the hardware portion
-/*class HW{
-	private: 
-
-	public:
-};*/
 
 // Memory Management Unit
 class MemoryManagementUnit{ 
@@ -52,12 +46,12 @@ class Word{
 
 
 //Address
-class Address: public Word{ 
+class Address: public Word{
 public: 
-Word address();
-Word displacement()
-Word frame();
-Word page();		
+	Word address();
+	Word displacement()
+	Word frame();
+	Word page();		
 
 };
 
@@ -67,9 +61,9 @@ class BackingStore{
 		BackingStore();
 		
 	public:
-BackingStore();
+	
+	BackingStore();
 ~BackingStore();  //destructor
-
 BackingStore instance();  /*  in main.cpp:
  			BS BS::instance(  ){} */
 
@@ -92,6 +86,6 @@ RAM instance();
 struct Status{
 	bool accessed;
 	Bool dirty;
-}
+}vmProjecrHWHeader
  
 #endif
