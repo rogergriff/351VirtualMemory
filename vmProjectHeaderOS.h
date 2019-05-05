@@ -17,7 +17,7 @@ class PRA{ //Page replacement algorithm
            FIFO(); // constructor
         private:
            Word front; // what's at the front and will therefore be booted next when it's full.
-      } 
+      }; 
       class LRU {
          public:
            Word findVictim();
