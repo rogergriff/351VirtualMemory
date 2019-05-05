@@ -42,7 +42,7 @@ private:
 };
 */
 
-struct LRU: public PRA{
+class LRU: public PRA{
 public:
   Word findVictim();
   LRU();
