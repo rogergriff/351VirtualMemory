@@ -92,8 +92,8 @@ class BackingStore{
 
 class RAM{
 	struct Status {
-		Bool accessed;
-		Bool dirty;
+		bool accessed;
+		bool dirty;
 	}vmProjectHWHeader
 	private:
 		RAM();
