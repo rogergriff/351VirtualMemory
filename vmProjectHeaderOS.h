@@ -43,13 +43,13 @@ private:
 */
 
 class LRU: public PRA{
-public:
-  Word findVictim();
-  LRU();
-  void updateUsage();
+    public:
+      Word findVictim();
+      LRU();
+      void updateUsage();
   
-private:
-  LRUList;
+    private:
+      LRUList;
 };
 
 
@@ -60,8 +60,8 @@ class MM{ //Memory Manager for OS
         PCB pageTable;
      public:
         MM(); //constructor creates pcb
-        instance();//?
-        operator=();//?
+        MM instance();//?
+        bool operator=();//?
         void pageIn(pageTable); //bring in page via demand paging, see 10.2 in book
  };
 
