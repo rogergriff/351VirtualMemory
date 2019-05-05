@@ -7,7 +7,11 @@ using namespace std;
 
 // Memory Management Unit
 class MemoryManagementUnit{ 
- 	private:
+	struct PageFault {
+		PageFault();
+		Word pageNumber;
+	}
+	private:
 		MemoryManagementUnit();
 		int Page_AccCount;
 		int Page_Faults;
@@ -28,32 +32,46 @@ class MemoryManagementUnit{
 		TLB_Faults();
 }
 
-class PageFault: public MMU{ 
-	// private:
-	public:
-		PageFault();
-		Word pageNumber;
+//class PageFault: public MMU{ 
+//	// private:
+//	public:
+//		PageFault();
+//		Word pageNumber;
 };
 
+//Address nested in Word Struct
 
-
-// Word
-class Word{
-	public:
-		int unit;
-		unit value_t;
+struct Word { 
+	int unit;
+	unit value_t;
+	
+	struct address {
+		Word address();
+		Word displacement();
+		Word frame();
+		Word page();
+	}
 };
+			
 
 
-//Address
-class Address: public Word{
-public: 
-	Word address();
-	Word displacement()
-	Word frame();
-	Word page();		
+//// Word
+//class Word{
+//	public:
+//		int unit;
+//		unit value_t;
+//};
 
-};
+
+////Address
+//class Address: public Word{
+//public: 
+//	Word address();
+//	Word displacement()
+//	Word frame();
+//	Word page();		
+
+//};
 
 //Backing Store
 class BackingStore{
@@ -63,13 +81,14 @@ class BackingStore{
 	public:
 	
 	BackingStore();
-~BackingStore();  //destructor
-BackingStore instance();  /*  in main.cpp:
+	~BackingStore();  //destructor
+	BackingStore instance();  /*  in main.cpp:
  			BS BS::instance(  ){} */
 
-BackingStore operator=();
-void read(char);
+	BackingStore operator=();
+	void read();
 };
+
 
 class RAM{
 	private:
@@ -77,10 +96,10 @@ class RAM{
 		int frameSize;
 	public:
 		RAM();
-RAM instance();
+		RAM instance();
 		RAM operator=();
 		void read<T>();
-		Status arrStatus < Status, frameSize >
+		Status arrStatus [Status, frameSize]
 };
 
 struct Status{
