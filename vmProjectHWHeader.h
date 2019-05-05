@@ -91,6 +91,10 @@ class BackingStore{
 
 
 class RAM{
+	struct Status {
+		Bool accessed;
+		Bool dirty;
+	}vmProjectHWHeader
 	private:
 		RAM();
 		int frameSize;
@@ -102,9 +106,9 @@ class RAM{
 		Status arrStatus [Status, frameSize]
 };
 
-struct Status{
+/*struct Status{
 	bool accessed;
 	Bool dirty;
-}vmProjecrHWHeader
+}vmProjecrHWHeader*/
  
 #endif
