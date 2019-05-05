@@ -6,7 +6,6 @@
 #include <fstream>
 using namespace std;
 
-int main() {
 
   
               // Header OS
@@ -117,7 +116,8 @@ MemoryManagementUnit MemoryManagementUnit:: operator=()
 
 //end of Memory Management Unit
 
-  
+int main() {
+
   
   
 }
