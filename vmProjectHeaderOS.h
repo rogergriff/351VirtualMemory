@@ -18,14 +18,7 @@ class PRA{ //Page replacement algorithm
         private:
            Word front; // what's at the front and will therefore be booted next when it's full.
       };
-      class LRU {
-         public:
-           Word findVictim();
-           LRU();
-           void updateUsage();
-        private:
-           LRUList;
-       }
+  
         
     private:
           int options(); //use this to get the type of PRA wanted at run-time, so something like "what page replacemnt algorithm do you want to use, 1 for fifo or 2 for lru
@@ -49,7 +42,7 @@ private:
 };
 */
 
-/*struct LRU: public PRA{
+struct LRU: public PRA{
 public:
   Word findVictim();
   LRU();
@@ -58,7 +51,7 @@ public:
 private:
   LRUList;
 };
-*/
+
 
 class MM{ //Memory Manager for OS
      private:
