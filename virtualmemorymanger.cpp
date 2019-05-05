@@ -9,7 +9,7 @@ using namespace std;
 int main() {
 
   
-  // Header OS
+              // Header OS
   
 // protected Class PRA
   
@@ -65,10 +65,58 @@ void MM::pageIN(pageTable){
 };
   
   
- 
+           //Header HARDWARE
   
   
-  
+  //class Memory Management Unit
+
+//begin
+//default constructor 
+MemoryManagementUnit : MemoryManagementUnit()
+{
+	Page_AccCount = 0;
+	Page_Faults = 0;
+	TLB_AccCount = 0;
+	TLB_Faults = 0;
+}
+
+
+
+//
+int MemoryManagementUnit:: pageAccesses()
+{
+	
+}
+
+
+int MemoryManagementUnit:: pageFaults()
+{
+	
+}
+
+
+
+int MemoryManagementUnit:: TLB_Accesses()
+{
+	
+}
+
+
+
+int MemoryManagementUnit:: TLB_Faults()
+{
+	
+}
+
+
+MemoryManagementUnit MemoryManagementUnit:: operator=()
+{
+	
+}
+
+
+//end of Memory Management Unit
+
   
   
   
