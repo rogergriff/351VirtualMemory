@@ -4,11 +4,9 @@
 #include <fstream>
 using namespace std;
 
-/*
-//this will be the header file for the OS part our project
-class OS{
 
-}; */
+//this will be the header file for the OS part our project
+
 
 class PRA{ //Page replacement algorithm
       struct FIFO {
@@ -16,7 +14,19 @@ class PRA{ //Page replacement algorithm
            Word findVictim();
            FIFO(); // constructor
         private:
+          
            Word front; // what's at the front and will therefore be booted next when it's full.
+      };
+  
+      
+      struct LRU: public PRA{
+       public:
+      Word findVictim();
+      LRU();
+      void updateUsage();
+  
+       private:
+      LRUList;
       };
   
         
@@ -32,25 +42,7 @@ class PRA{ //Page replacement algorithm
   };
 
 
-/* struct FIFO: public PRA{
-public:
-  Word findVictim();
-  FIFO(); //constructor 
-  
-private:
-  Word front; //what's at the front and will therefore be booted next when it's full.
-};
-*/
 
-class LRU: public PRA{
-    public:
-      Word findVictim();
-      LRU();
-      void updateUsage();
-  
-    private:
-      LRUList;
-};
 
 
 class MM{ //Memory Manager for OS
@@ -67,11 +59,11 @@ class MM{ //Memory Manager for OS
 
 struct PTE{ //Page Table Entry
   unsigned char frameNumber;
-  bool valid;
+  bool valid = false;
 };
 
 struct PCB{ //Process control block
   PTE myPageTable[256];
-};
+}; //usually would contain more, but this is all we care about for the project
 
 #endif
