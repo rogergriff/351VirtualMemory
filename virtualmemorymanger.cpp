@@ -116,7 +116,7 @@ MemoryManagementUnit MemoryManagementUnit:: operator=()
 
 //end of Memory Management Unit
 
-int main() {
+int main() { //shouldn't we put main at the top, i mean, that's why we put in the .h files, so it knows all the functions and classes and structs that will be available, so we can just do main at the start.
 
   
   
