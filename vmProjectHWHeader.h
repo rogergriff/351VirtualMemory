@@ -94,7 +94,7 @@ class RAM{
 	struct Status {
 		bool accessed;
 		bool dirty;
-	}vmProjectHWHeader
+	}vmProjectHWHeader //? whats this for?
 	private:
 		RAM();
 		int frameSize;
