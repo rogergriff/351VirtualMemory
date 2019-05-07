@@ -47,14 +47,15 @@ int main() {
 myfile.close();
 /* dont know if this is how we're supposed to do this but this theoretical masks the bits to get the page and the offset. 
 Then it shifts it by 8 to get the page table number. */	
-
+cout << "result of bitmasking \n" ;
 		for (int i=0; i< size; i++) {
 			page = a[i] & 65280;
 			offset = a[i] & 255;
 			page_table_number = page >>8;
 			//cout << page << endl;
-			cout << page_table_number << endl;
-		}
+			cout << page_table_number <<"\t" << offset<< endl;
+			
+			
 }
 
 
