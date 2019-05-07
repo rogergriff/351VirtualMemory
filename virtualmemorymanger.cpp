@@ -65,10 +65,10 @@ return 0;
 
 }}
 
-// read in logical addresses from address.txt
+// read in logical addresses from address.txt --- done 
 
 
-// mask bits to get page number and offset
+// mask bits to get page number and offset ----- done 
 /* 	a "Word" type will be created
 	
 */
@@ -171,7 +171,7 @@ bool MM::operator=(){
 /*
 void MM::pageIN(pageTable){
 
-ptable[256]; 
+
 
 };
   */
