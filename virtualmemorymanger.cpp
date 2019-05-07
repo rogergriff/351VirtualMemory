@@ -37,7 +37,7 @@ int main() {
 		
 
 			else{
-				cout <<"you fucked up";
+				cout <<"error reading in addresses";
 			    }
 				
 				}
