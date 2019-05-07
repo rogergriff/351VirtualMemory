@@ -101,7 +101,7 @@ class RAM{
 	}vmProjectHWHeader //? whats this for?
 	private:
 		RAM();
-		int frameSize;
+		int frameSize = 256;
 	public:
 		RAM();
 		RAM instance();
