@@ -11,6 +11,8 @@ class MemoryManagementUnit{
 		PageFault();
 		Word pageNumber;
 	}
+	
+	
 	private:
 		MemoryManagementUnit();
 		int Page_AccCount;
@@ -20,9 +22,11 @@ class MemoryManagementUnit{
 		int TLB_Faults;
 
 	public:
-		void clearTLB();
-		MemoryManagementUnit();
-		MemoryManagementUnit(char, char);
+		void clearTLB(); //clear the buffer
+		MemoryManagementUnit(); //initialize?
+	
+		MemoryManagementUnit( , );
+	
 		MemoryManagementUnit instance();
 		MemoryManagementUnit operator=();
 		pageAccesses();
