@@ -8,7 +8,7 @@ using namespace std;
 //this will be the header file for the OS part our project
 
 
-class PRA{ //Page replacement algorithm
+/*class PRA{ //Page replacement algorithm
       struct FIFO {
         public:
            Word findVictim();
@@ -40,11 +40,11 @@ class PRA{ //Page replacement algorithm
            getPRA();
            updateUsage();
   };
+*/
 
 
 
-
-
+/*
 class MM{ //Memory Manager for OS
      private:
         freeFrames(); //which frames are free, if any??
@@ -56,17 +56,21 @@ class MM{ //Memory Manager for OS
         bool operator=();//?
         void pageIn(pageTable); //bring in page via demand paging, see 10.2 in book
  };
-
+*/
+/*
 struct PTE{ //Page Table Entry
   unsigned char frameNumber;
   bool valid = false;
 };
-
+*/
+/*
 struct PCB{ //Process control block
   PTE myPageTable[256];
 }; //usually would contain more, but this is all we care about for the project
-
+*/
+/*
 struct Frame{
       unsigned char byt[255];
 };
+*/
 #endif
