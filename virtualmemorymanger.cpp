@@ -5,7 +5,32 @@ using namespace std;
 #include "HARDWARE.h"
 #include "OS.h"
 
-int main() {
+
+
+int main() { 
+  
+    ifstream myfile("d:\\addresses.txt");
+	if(myfile.is_open()){
+		int aSize = 0;
+		int a[999];
+		
+		while(true){
+			int x;
+			myfile >> x;
+			if (myfile.eof())
+				break;
+			a[aSize++] = x;
+		}
+		for (int i = 0; i < aSize; ++i)
+			cout<< a[i] <<" ";
+			cout<<endl;
+		else{
+			cout <<"error";
+		}
+		return 0
+	
+    	
+}
 
 // read in logical addresses from address.txt
 
