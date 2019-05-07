@@ -4,7 +4,7 @@
 #include <fstream>
 using namespace std;
 
-
+/*
 // Memory Management Unit
 class MemoryManagementUnit{ 
 	struct PageFault {
@@ -35,7 +35,7 @@ class MemoryManagementUnit{
 		TLB_Accesses();
 		TLB_Faults();
 }
-
+*/
 //class PageFault: public MMU{ 
 //	// private:
 //	public:
@@ -76,7 +76,7 @@ struct Word {
 //	Word page();		
 
 //};
-
+/*
 //Backing Store
 class BackingStore{
 	private: 
@@ -86,14 +86,16 @@ class BackingStore{
 	
 	BackingStore();
 	~BackingStore();  //destructor
-	BackingStore instance();  /*  in main.cpp:
- 			BS BS::instance(  ){} */
+	BackingStore instance();  //  in main.cpp:
+ 		//	BS BS::instance(  ){} 
 
 	BackingStore operator=();
 	void read();
 };
 
+*/
 
+/*
 class RAM{
 	struct Status {
 		bool accessed;
@@ -109,6 +111,7 @@ class RAM{
 		void read<T>();
 		Status arrStatus [Status, frameSize]
 };
+*/
 
 /*struct Status{
 	bool accessed;
