@@ -59,7 +59,9 @@ class MM{ //Memory Manager for OS
 */
 /*
 struct PTE{ //Page Table Entry
-  unsigned char frameNumber;
+    char valid;
+    int frameNumber;
+  //unsigned char frameNumber;
   bool valid = false;
 };
 */
