@@ -58,7 +58,8 @@ cout << "result of bitmasking \n" ;
 			
 }
 
-
+for (i=0; i < 256; i++)
+	ptable[i].vaild;
 
 return 0;
 
@@ -169,6 +170,9 @@ bool MM::operator=(){
     
 /*
 void MM::pageIN(pageTable){
+
+ptable[256]; 
+
 };
   */
   
