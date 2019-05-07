@@ -7,8 +7,16 @@
 using namespace std;
 
 
+//end of Memory Management Unit
+
+int main() { //shouldn't we put main at the top, i mean, that's why we put in the .h files, so it knows all the functions and classes and structs that will be available, so we can just do main at the start.
+
   
-              // Header OS
+  
+}
+  
+
+// Header OS
   
 // protected Class PRA
   
@@ -102,22 +110,94 @@ int MemoryManagementUnit:: TLB_Accesses()
 
 
 
+int MemoryManagementUnit:: TLB_Accesses()
+{
+	//
+	
+}
+
+
+
 int MemoryManagementUnit:: TLB_Faults()
 {
-	
+	//counts how many tlb faults
 }
 
+/* 
+In hardware.h it should be:
+bool operator=( const MemoryManagementUnit& ) const;
+*/
 
-MemoryManagementUnit MemoryManagementUnit:: operator=()
+bool MemoryManagementUnit:: operator=( const MemoryManagementUnit & a ) const
 {
 	
 }
-
 
 //end of Memory Management Unit
 
-int main() { //shouldn't we put main at the top, i mean, that's why we put in the .h files, so it knows all the functions and classes and structs that will be available, so we can just do main at the start.
 
-  
-  
+//word
+
+//backing store
+
+BackingStore::BackingStore()
+{
+
 }
+
+BackingStore:: ~BackingStore()
+{
+
+}
+
+BackingStore BackingStore::instance()
+{
+
+}
+
+bool BackingStore :: opertor=()
+{
+
+}
+
+void BackingStore :: read()
+{
+	//cin from backingstore
+}
+
+
+
+//Ram
+
+RAM:: RAM()
+{
+
+}
+
+RAM RAM::instance()
+{
+
+}
+
+//bool operator=();
+Bool RAM::operator=()
+{
+
+}
+
+
+//idk if this is correct
+void RAM::read<T>()
+{
+
+}
+
+
+//Status RAM::arrStatus( Status, int b)
+{
+	// Status
+	frameSize = b;
+}
+
+
+
