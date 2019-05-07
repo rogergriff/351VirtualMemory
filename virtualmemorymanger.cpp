@@ -16,8 +16,8 @@ int main() {
 		int aSize = 0;
 		int a[999];
 		int size = 999;
-		int page;
-		int offset;
+		Word pa;
+		Word off;
 		int page_table_number;
 
     ifstream myfile("addresses.txt");
@@ -49,9 +49,9 @@ myfile.close();
 Then it shifts it by 8 to get the page table number. */	
 cout << "result of bitmasking \n" ;
 		for (int i=0; i< size; i++) {
-			page = a[i] & 65280;
-			offset = a[i] & 255;
-			page_table_number = page >>8;
+			page_table_number = pa.page(i,a)>>8;
+			off = a[i] & 255;
+			//page_table_number = pa >>8;
 			//cout << page << endl;
 			cout << page_table_number <<"\t" << offset<< endl;
 			
@@ -282,5 +282,10 @@ void RAM::read<T>()
 	frameSize = b;
 }
 
+Word address::page(int x, int a[]){
+Word p;
+p.unit = a[x] & 65280;
+return p;
 
+}
 
