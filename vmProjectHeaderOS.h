@@ -66,4 +66,7 @@ struct PCB{ //Process control block
   PTE myPageTable[256];
 }; //usually would contain more, but this is all we care about for the project
 
+struct Frame{
+      unsigned char byt[255];
+};
 #endif
