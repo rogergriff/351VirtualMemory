@@ -10,13 +10,20 @@ using namespace std;
 
 
 
+
 int main() { 
   
-    ifstream myfile("addresses.txt");
-	if(myfile.is_open()){
 		int aSize = 0;
 		int a[999];
+		int size = 999;
+		int page;
+		int offset;
+		int page_table_number;
+
+    ifstream myfile("addresses.txt");
+	if(myfile.is_open()){
 		
+
 		while(true){
 			int x;
 			myfile >> x;
@@ -25,6 +32,7 @@ int main() {
 			else if(!myfile.eof()){
 			a[aSize] = x;
 			aSize++;
+
 			}
 		
 
@@ -33,14 +41,27 @@ int main() {
 			    }
 				
 				}
-for (int i = 0; i < aSize; i++){
+/*for (int i = 0; i < aSize; i++){
 				cout<< a[i] <<" ";
-				cout<<endl;}		
+				cout<<endl;}*/		
 myfile.close();
-		return 0;
+/* dont know if this is how we're supposed to do this but this theoretical masks the bits to get the page and the offset. 
+Then it shifts it by 8 to get the page table number. */	
+
+		for (int i=0; i< size; i++) {
+			page = a[i] & 65280;
+			offset = a[i] & 255;
+			page_table_number = page >>8;
+			//cout << page << endl;
+			cout << page_table_number << endl;
+		}
 }
-}
-	
+
+
+
+return 0;
+
+}	
 
 // read in logical addresses from address.txt
 
