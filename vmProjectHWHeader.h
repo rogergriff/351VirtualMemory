@@ -41,7 +41,7 @@ class MemoryManagementUnit{
 //	public:
 //		PageFault();
 //		Word pageNumber;
-};
+//};
 
 //Address nested in Word Struct
 
