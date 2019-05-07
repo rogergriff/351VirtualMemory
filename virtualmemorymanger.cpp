@@ -1,50 +1,51 @@
-#ifndef HARDWARE_H
-#define HARDWARE_H
-#ifndef OS_H
-#define OS_H
 #include <iostream>
 #include <fstream>
 using namespace std;
 
+#include "HARDWARE.h"
+#include "OS.h"
 
-//end of Memory Management Unit
+int main() {
 
-int main() { //shouldn't we put main at the top, i mean, that's why we put in the .h files, so it knows all the functions and classes and structs that will be available, so we can just do main at the start.
+// read in logical addresses from address.txt
 
-  
-    ifstream myfile("d:\\addresses.txt");
-	if(myfile.is_open()){
-		int aSize = 0;
-		int a[999];
-		
-		while(true){
-			int x;
-			myfile >> x;
-			if (myfile.eof())
-				break;
-			a[aSize++] = x;
-		}
-		for (int i = 0; i < aSize; ++i)
-			cout<< a[i] <<" ";
-			cout<<endl;
-		else{
-			cout <<"error";
-		}
-		return 0
+
+// mask bits to get page number and offset
+/* 	a "Word" type will be created
+
 	
-    	
+*/
+	
+//tlb
+
+//go into page table array, page 0 to page 255
+// processControlBlock struct will contain the page table
+/*	if there then we get a frame number
+	{
+	
+	}
+	if not available == Page Fault{
+		- Backingstore.bin will be used if there is a page fault
+		- backingstore.bin is size 256
+		- Ex: if we need pg.15 but it resulted in  page fault, in order to find it from the bin
+			we can use 256 * 15 to find the beginning of the corresponding frame number
+	}
+	
+*/
+		
+//Frame number is allocated
+	
+//Go to required frame
+//While in frame, use offset to go to the beginning of a specific line
+	
+
+//read out whatever is in that specific frame
+	
+	
 }
   
 
-  
-
-// Header OS
-  
-// protected Class PRA
-  
-
-// From Class PRA
-  
+//OS header functions
 PRA::~PRA();
 
 Word PRA::findVictim (){
@@ -94,11 +95,14 @@ void MM::pageIN(pageTable){
 };
   
   
-           //Header HARDWARE
-  
-  
-  //class Memory Management Unit
+           
 
+
+
+//Header HARDWARE
+  
+  
+ //class Memory Management Unit
 //begin
 //default constructor 
 MemoryManagementUnit : MemoryManagementUnit()
