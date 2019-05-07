@@ -22,7 +22,7 @@ int main() {
 			myfile >> x;
 			if (myfile.eof())
 				break;
-			else if(true){
+			else if(!myfile.eof()){
 			a[aSize] = x;
 			aSize++;
 			}
