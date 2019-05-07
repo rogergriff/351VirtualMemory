@@ -16,8 +16,8 @@ int main() {
 		int aSize = 0;
 		int a[999];
 		int size = 999;
-		Word pa;
-		Word off;
+		int page;
+		int offset;
 		int page_table_number;
 
     ifstream myfile("addresses.txt");
@@ -49,9 +49,9 @@ myfile.close();
 Then it shifts it by 8 to get the page table number. */	
 cout << "result of bitmasking \n" ;
 		for (int i=0; i< size; i++) {
-			page_table_number = pa.page(i,a)>>8;
-			off = a[i] & 255;
-			//page_table_number = pa >>8;
+			page = a[i] & 65280;
+			offset = a[i] & 255;
+			page_table_number = page >>8;
 			//cout << page << endl;
 			cout << page_table_number <<"\t" << offset<< endl;
 			
@@ -62,14 +62,13 @@ cout << "result of bitmasking \n" ;
 
 return 0;
 
-}	
+}}
 
 // read in logical addresses from address.txt
 
 
 // mask bits to get page number and offset
 /* 	a "Word" type will be created
-
 	
 */
 	
@@ -99,58 +98,79 @@ return 0;
 //read out whatever is in that specific frame
 	
 	
-}
+//}
   
-
+/*
 //OS header functions
 PRA::~PRA();
-
+*/
+  
+/*
 Word PRA::findVictim (){
   
 };
-
+*/
+  
+/*
 Word PRA::getPRA (){
   
 }; 
-
+*/
+  
+/*
 Word PRA::updateUsage(){
   
 };
-
+*/
   
 // from struct FIFO in Class PRA
-
+  
+/*
 Word PRA FIFO::findVictim(){
 
 };
+  */
   
+/*
 Word PRA FIFO::FIFO(); 
- 
+*/ 
 //From class LRU:public PRA
-  
+    
+/*
 Word LRU::findVictim(){
   
 };
+*/
   
+/*
 LRU::LRU ();
+  */
   
+/*
 void LRU::updateUsage(){
 
 };
-  
+  */
 //From Class Memory Manager  
-  
+    
+/*
 MM::MM ();
+*/
   
+/*
 MM MM::instance(){
 };
-  
+*/
+    
+/*
 bool MM::operator=(){
 };
-  
+*/
+    
+/*
 void MM::pageIN(pageTable){
 };
-  
+  */
   
            
 
@@ -158,7 +178,7 @@ void MM::pageIN(pageTable){
 
 //Header HARDWARE
   
-  
+/*  
  //class Memory Management Unit
 //begin
 //default constructor 
@@ -169,123 +189,123 @@ MemoryManagementUnit : MemoryManagementUnit()
 	TLB_AccCount = 0;
 	TLB_Faults = 0;
 }
+*/
 
-
-
+/*
 //
 int MemoryManagementUnit:: pageAccesses()
 {
 	
 }
-
-
+*/
+/*
 int MemoryManagementUnit:: pageFaults()
 {
 	
 }
+*/
 
-
-
+/*
 int MemoryManagementUnit:: TLB_Accesses()
 {
 	
 }
+*/
 
-
-
+/*
 int MemoryManagementUnit:: TLB_Accesses()
 {
 	//
 	
 }
+*/
 
-
-
+/*
 int MemoryManagementUnit:: TLB_Faults()
 {
 	//counts how many tlb faults
 }
-
+*/
 /* 
 In hardware.h it should be:
 bool operator=( const MemoryManagementUnit& ) const;
 */
-
+/*
 bool MemoryManagementUnit:: operator=( const MemoryManagementUnit & a ) const
 {
 	
 }
 
 //end of Memory Management Unit
-
+*/
 
 //word
-
+/*
 //backing store
 
 BackingStore::BackingStore()
 {
 
 }
-
+*/
+/*
 BackingStore:: ~BackingStore()
 {
 
 }
-
+*/
+/*
 BackingStore BackingStore::instance()
 {
 
 }
-
+*/
+/*
 bool BackingStore :: opertor=()
 {
 
 }
-
+*/
+/*
 void BackingStore :: read()
 {
 	//cin from backingstore
 }
+*/
 
-
-
+/*
 //Ram
 
 RAM:: RAM()
 {
 
 }
-
+*/
+/*
 RAM RAM::instance()
 {
 
 }
-
+*/
+/*
 //bool operator=();
 Bool RAM::operator=()
 {
 
 }
-
-
+*/
+/*
 //idk if this is correct
 void RAM::read<T>()
 {
 
 }
-
-
+*/
+/*
 //Status RAM::arrStatus( Status, int b)
 {
 	// Status
 	frameSize = b;
 }
 
-Word address::page(int x, int a[]){
-Word p;
-p.unit = a[x] & 65280;
-return p;
-
-}
-
+*/
