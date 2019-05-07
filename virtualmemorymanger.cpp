@@ -19,7 +19,7 @@ int main() {
 		int page;
 		int offset;
 		int page_table_number;
-
+		int frame;
     ifstream myfile("addresses.txt");
 	if(myfile.is_open()){
 		
@@ -58,9 +58,12 @@ cout << "result of bitmasking \n" ;
 			
 }
 
+// initalize page table ---- eventually initalize TLB
 for (i=0; i < 256; i++)
-	ptable[i].vaild;
-
+	PTE[i].vaild=0;
+// access the page table 
+if (PTE[page].vaild==1)
+frame = PTE[page].frame;
 return 0;
 
 }}
