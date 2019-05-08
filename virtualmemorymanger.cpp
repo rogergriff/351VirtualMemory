@@ -19,10 +19,10 @@ int main() {
 		int size = 999;
 		
 		vector<uint32_t> a(size);
-		//Word page;
+		//Word page;  //delete before turning in if the program works
 		Word offset;
-		//int page;
-		//int offset;		
+		//int page;  //delete before turning in
+		//int offset;	//delete before turning in	
 		Word page_table_number;
 		address add;
 		MM memory;
@@ -35,7 +35,7 @@ int main() {
 			uint32_t x;
 			myfile >> x;
 			if (myfile.eof()){
-			cout << "breaking out after aSize=" << aSize << " because found eof.\n"; 
+			//cout << "breaking out after aSize=" << aSize << " because found eof.\n"; //debugging code
 			break;
 }
 			else if(!myfile.eof()){
@@ -46,7 +46,7 @@ int main() {
 		
 
 			else{
-				cout <<"error reading in addresses";
+				cout <<"error reading in addresses"; //should never get here, seeing how you should only ever find the eof, or find that its not eof
 			    }
 				
 				}/*
@@ -61,12 +61,12 @@ Then it shifts it by 8 to get the page table number. */
 			//page = 
 			//offset = 
 			page_table_number = add.page(i,a); //gets the number to use for the page table
-			//cout << "got " << page_table_number.u_int << " from add.page(i,a) \t";
-			//cout << "the vector looks like this: \n";
+			//cout << "got " << page_table_number.u_int << " from add.page(i,a) \t"; //debugging code
+			//cout << "the vector looks like this: \n"; //debugging code
 			//	for(int i=0; i<aSize; ++i)
 			//		cout << a[i] << endl;
-			page_table_number.u_int = page_table_number.u_int>>8;
-			offset = add.offset(i,a); //get the to use for the frame
+			page_table_number.u_int = page_table_number.u_int>>8; //shifting the result we got so that its an appropriate page number
+			offset = add.offset(i,a); //get the offset to use for the frame
 //cout << page << endl;
 			//cout << "page table number:" << page_table_number.u_int <<"\toffset:"<< offset.u_int<< endl;
 			
@@ -87,7 +87,7 @@ return x;
 
 Word address::page(int x, vector<uint32_t> a){
 Word p;
-p.u_int = p.uin32_t(a[x] & 65280);
+p.u_int = p.uin32_t(a[x] & 65280); //bit masking so that we get only bits 15 through 8
 return p;
 }
 
@@ -189,7 +189,7 @@ void LRU::updateUsage(){
     
 MM::MM(){
 PCB block;
-	//for(int i=0; i <256; ++i){
+	//for(int i=0; i <256; ++i){ //code for debugging
 	//cout << "for block.myPageTable[" << i << "].frameNumber we have a value of:" << block.myPageTable[i].frameNumber << endl;
 	//cout << "for block.myPageTagle[" << i << "].valid we have a value of :" << block.myPageTable[i].valid << endl;
 }
