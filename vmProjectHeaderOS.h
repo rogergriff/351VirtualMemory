@@ -43,35 +43,32 @@ using namespace std;
 */
 
 
+struct PTE{ //Page Table Entry
+  unsigned char frameNumber = 0;
+  bool valid = false;
+};
 
-/*
+
+struct PCB{ //Process control block
+  PTE myPageTable[256];
+}; //usually would contain more, but this is all we care about for the project
+
+
 class MM{ //Memory Manager for OS
      private:
-        freeFrames(); //which frames are free, if any??
-        MM(); //constructor??
+      //  freeFrames(); //which frames are free, if any??
+       // MM(); //constructor??
         PCB pageTable;
      public:
         MM(); //constructor creates pcb
-        MM instance();//?
-        bool operator=();//?
-        void pageIn(pageTable); //bring in page via demand paging, see 10.2 in book
+        //MM instance();//?
+        //bool operator=();//?
+       // void pageIn(pageTable); //bring in page via demand paging, see 10.2 in book
  };
-*/
-/*
-struct PTE{ //Page Table Entry
-    char valid;
-    int frameNumber;
-  //unsigned char frameNumber;
-  bool valid = false;
-};
-*/
-/*
-struct PCB{ //Process control block
-  //PTE myPageTable[256]; why is it PTE
-  ptable[256];
-  
-}; //usually would contain more, but this is all we care about for the project
-*/
+
+
+
+
 /*
 struct Frame{
       unsigned char byt[255];
