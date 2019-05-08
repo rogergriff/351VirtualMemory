@@ -58,12 +58,7 @@ cout << "result of bitmasking \n" ;
 			
 }
 
-// initalize page table ---- eventually initalize TLB
-for (i=0; i < 256; i++)
-	PTE[i].vaild=0;
-// access the page table 
-if (PTE[page].vaild==1)
-frame = PTE[page].frame;
+
 return 0;
 
 }}
