@@ -45,16 +45,23 @@ class MemoryManagementUnit{
 //Address nested in Word Struct
 
 struct Word { 
-	int unit;
-	//unit value_t;
+	int u_int;
+	int uin32_t(uint32_t);
 	
+	/*struct address {
+		//Word address(); //we need to rename this somehow so it doesnt throw up an error constantly
+		int offset(int, int[]);
+		Word frame();
+		int page(int, int[]);
+	};*/
+};
+			
 	struct address {
 		//Word address(); //we need to rename this somehow so it doesnt throw up an error constantly
-		Word offset();
+		Word offset(int, vector<uint32_t>);
 		Word frame();
-		Word page();
+		Word page(int, vector<uint32_t>);
 	};
-};
 			
 
 
