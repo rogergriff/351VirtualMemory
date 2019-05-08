@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 using namespace std;
 
 #include "HARDWARE.h"
@@ -11,24 +12,32 @@ using namespace std;
 
 
 
+
 int main() { 
   
 		int aSize = 0;
-		int a[999];
 		int size = 999;
-		int page;
-		int offset;
-		int page_table_number;
-		int frame;
+		
+		vector<uint32_t> a(size);
+		//Word page;
+		Word offset;
+		//int page;
+		//int offset;		
+		Word page_table_number;
+		address add;
+		MM memory;
+
     ifstream myfile("addresses.txt");
 	if(myfile.is_open()){
 		
 
 		while(true){
-			int x;
+			uint32_t x;
 			myfile >> x;
-			if (myfile.eof())
-				break;
+			if (myfile.eof()){
+			cout << "breaking out after aSize=" << aSize << " because found eof.\n"; 
+			break;
+}
 			else if(!myfile.eof()){
 			a[aSize] = x;
 			aSize++;
@@ -40,28 +49,54 @@ int main() {
 				cout <<"error reading in addresses";
 			    }
 				
-				}
-/*for (int i = 0; i < aSize; i++){
-				cout<< a[i] <<" ";
-				cout<<endl;}*/		
+				}/*
+for (int i = 0; i < aSize; i++){
+				cout<< a[i] <<" " <<endl;}
+*/
+//cout << "aSize is " << aSize << endl;		
 myfile.close();
 /* dont know if this is how we're supposed to do this but this theoretical masks the bits to get the page and the offset. 
 Then it shifts it by 8 to get the page table number. */	
-cout << "result of bitmasking \n" ;
-		for (int i=0; i< size; i++) {
-			page = a[i] & 65280;
-			offset = a[i] & 255;
-			page_table_number = page >>8;
-			//cout << page << endl;
-			cout << page_table_number <<"\t" << offset<< endl;
+		for (int i=0; i< aSize; i++) {
+			//page = 
+			//offset = 
+			page_table_number = add.page(i,a); //gets the number to use for the page table
+			//cout << "got " << page_table_number.u_int << " from add.page(i,a) \t";
+			//cout << "the vector looks like this: \n";
+			//	for(int i=0; i<aSize; ++i)
+			//		cout << a[i] << endl;
+			page_table_number.u_int = page_table_number.u_int>>8;
+			offset = add.offset(i,a); //get the to use for the frame
+//cout << page << endl;
+			//cout << "page table number:" << page_table_number.u_int <<"\toffset:"<< offset.u_int<< endl;
 			
 			
 }
 
 
+
 return 0;
 
 }}
+
+
+int Word::uin32_t(uint32_t x){
+u_int = static_cast<int> (x);
+return x;
+}
+
+Word address::page(int x, vector<uint32_t> a){
+Word p;
+p.u_int = p.uin32_t(a[x] & 65280);
+return p;
+}
+
+Word address::offset(int x, vector<uint32_t> a){
+Word o;
+o.u_int = o.uin32_t(a[x] & 255);
+return o;
+}
+
 
 // read in logical addresses from address.txt --- done 
 
@@ -152,9 +187,13 @@ void LRU::updateUsage(){
   */
 //From Class Memory Manager  
     
-/*
-MM::MM ();
-*/
+MM::MM(){
+PCB block;
+	//for(int i=0; i <256; ++i){
+	//cout << "for block.myPageTable[" << i << "].frameNumber we have a value of:" << block.myPageTable[i].frameNumber << endl;
+	//cout << "for block.myPageTagle[" << i << "].valid we have a value of :" << block.myPageTable[i].valid << endl;
+}
+}
   
 /*
 MM MM::instance(){
