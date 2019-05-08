@@ -6,6 +6,7 @@ using namespace std;
 #include "HARDWARE.h"
 #include "OS.h"
 
+#define FRAME_SIZE 256 // size of the frame
 
 
 
