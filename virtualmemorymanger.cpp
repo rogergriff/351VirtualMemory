@@ -70,13 +70,17 @@ Then it shifts it by 8 to get the page table number. */
 			offset = add.offset(i,a); //get the offset to use for the frame
 //cout << page << endl;
 			//cout << "page table number:" << page_table_number.u_int <<"\toffset:"<< offset.u_int<< endl;
-			
+			memory.readPageTable(page_table_number.u_int, unit);
 			
 }
 
-
-
+cout << "page faults is " << unit.pageFaults() << "\t aSize is " << aSize << endl; 
+page_fault_rate = (static_cast<float> (unit.pageFaults())/static_cast<float> (aSize)) * 100;
+cout << "\n\n\n\n\n\n\nThe page fault rate was:" << page_fault_rate << "%\n";// << (unit.pageFaults()/aSize) * percent<<"%\n";
+//cout<< "The amount of TLB hit rate was:" << (unit.TLB_Accesses()/aSize)*100<<"%\n";
 return 0;
+
+}}
 
 }}
 
@@ -206,56 +210,76 @@ bool MM::operator=(){
 };
 */
     
-/*
-void MM::pageIN(pageTable){
+int MM::readPageTable(int x, MemoryManagementUnit& u){
 
+if(pageTable.myPageTable[x].valid == true){
+	cout<< "found entry for page " << x << endl;
+	u.addPageAccesses();	
+	return pageTable.myPageTable[x].frameNumber;
+}
+else if(pageTable.myPageTable[x].valid == false){
+	cout << "failed to find page " << x << ", using page in \n";	
+	u.addPageFaults();	
+	pageIn(pageTable.myPageTable, x);
+	return readPageTable(x,u);
+}
+/*else
+	cout << "error reading page table"<< endl;*/
+	return 0;
 
+}  
 
-};
-  */
+void MM::pageIn(PTE pageT[], int page){
+pageT[page].valid = true;
+cout << "went into page in and set valid for "<< page << endl;
+}
   
            
 
 
-
-//Header HARDWARE
-  
-/*  
  //class Memory Management Unit
 //begin
-//default constructor 
-MemoryManagementUnit : MemoryManagementUnit()
+//default constructor
+
+MemoryManagementUnit:: MemoryManagementUnit()
 {
 	Page_AccCount = 0;
 	Page_Faults = 0;
-	TLB_AccCount = 0;
-	TLB_Faults = 0;
+	//TLB_AccCount = 0;
+	//TLB_Faults = 0;
 }
-*/
 
-/*
+
+
 //
-int MemoryManagementUnit:: pageAccesses()
+int MemoryManagementUnit::pageAccesses()
 {
-	
+	return Page_AccCount;
 }
-*/
-/*
-int MemoryManagementUnit:: pageFaults()
+
+
+int MemoryManagementUnit::pageFaults()
 {
-	
+	return Page_Faults;
 }
-*/
+
+void MemoryManagementUnit::addPageAccesses(){
+++Page_AccCount;
+}
+
+void MemoryManagementUnit::addPageFaults(){
+++Page_Faults;
+}
 
 /*
 int MemoryManagementUnit:: TLB_Accesses()
 {
-	
+	return TLB_AccCount;	
 }
 */
 
 /*
-int MemoryManagementUnit:: TLB_Accesses()
+void MemoryManagementUnit:: addTLB_Accesses()
 {
 	//
 	
@@ -265,9 +289,11 @@ int MemoryManagementUnit:: TLB_Accesses()
 /*
 int MemoryManagementUnit:: TLB_Faults()
 {
-	//counts how many tlb faults
+	return TLB_Faults;//counts how many tlb faults
 }
 */
+/*
+void MemoryManagementUnit::addTLB_Faults
 /* 
 In hardware.h it should be:
 bool operator=( const MemoryManagementUnit& ) const;
@@ -280,6 +306,7 @@ bool MemoryManagementUnit:: operator=( const MemoryManagementUnit & a ) const
 
 //end of Memory Management Unit
 */
+
 
 //word
 /*
