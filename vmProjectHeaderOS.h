@@ -68,9 +68,4 @@ class MM{ //Memory Manager for OS
         void pageIn(PTE[], int); //bring in page via demand paging, see 10.2 in book
 
 
-/*
-struct Frame{
-      unsigned char byt[255];
-};
-*/
 #endif
