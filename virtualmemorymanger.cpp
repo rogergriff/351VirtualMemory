@@ -7,7 +7,7 @@ using namespace std;
 #include "OS.h"
 
 #define FRAME_SIZE 256 // size of the frame
-
+#define TOTAL_NUMBER_FRAMES 256 // total number of frames in physical memory
 
 
 
