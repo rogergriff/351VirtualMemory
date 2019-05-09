@@ -2,6 +2,7 @@
 #define OS_H
 #include <iostream>
 #include <fstream>
+#include "HARDWARE.h"
 using namespace std;
 
 
@@ -61,12 +62,10 @@ class MM{ //Memory Manager for OS
         PCB pageTable;
      public:
         MM(); //constructor creates pcb
+	int readPageTable(int, MemoryManagementUnit&);
         //MM instance();//?
-        //bool operator=();//?
-       // void pageIn(pageTable); //bring in page via demand paging, see 10.2 in book
- };
-
-
+        //bool operator=(); //?
+        void pageIn(PTE[], int); //bring in page via demand paging, see 10.2 in book
 
 
 /*
