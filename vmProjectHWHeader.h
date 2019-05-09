@@ -123,10 +123,16 @@ class RAM{
 };
 */
 
+/*
+struct Frame{
+      unsigned char byt[255];
+};
+*/
+
 /*struct Status{
 	bool accessed;
 	Bool dirty;
-}vmProjecrHWHeader*/
+}*/
  
 #endif
  
