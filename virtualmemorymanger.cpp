@@ -26,6 +26,7 @@ int main() {
 	MemoryManagementUnit unit;
 	RAM ram;
 	float page_fault_rate;
+	float TLB_hit_rate;
 
     	ifstream myfile("addresses.txt");
 	if(myfile.is_open())
@@ -78,11 +79,19 @@ Then it shifts it by 8 to get the page table number. */
 			//cout << "page table number:" << page_table_number.u_int <<"\toffset:"<< offset.u_int<< endl;
 			memory.readPageTable(page_table_number.u_int, unit,ram);
 		}
-
+		
+		//PAGE FAULT RATE
 		cout << "page faults is " << unit.pageFaults() << "\t aSize is " << aSize << endl; 
 		page_fault_rate = (static_cast<float> (unit.pageFaults())/static_cast<float> (aSize)) * 100;
 		cout << "\n\n\n\n\n\n\nThe page fault rate was:" << page_fault_rate << "%\n";// << (unit.pageFaults()/aSize) * percent<<"%\n";
 		//cout<< "The amount of TLB hit rate was:" << (unit.TLB_Accesses()/aSize)*100<<"%\n";
+		
+		
+		//TLB HIT RATE
+		cout << "TLB Hit is " << unit.TLB_() << "\t aSize is " << aSize << endl;
+		TLB_hit_rate = (static_cast<float> (unit.TLB_Accesses())/static_cast<float> (aSize)) * 100;
+		
+		
 		return 0;
 	}
 }
@@ -106,7 +115,7 @@ Word address::page(int x, vector<uint32_t> a)
 Word address::offset(int x, vector<uint32_t> a)
 {
 	Word o;
-	o.u_int = o.uin32_t(a[x] & 255);
+	o.u_int = o.uin32_t(a[x] & 255);	//BIT ASKING TO RETREIVE OFFSET
 	return o;
 }
 
@@ -289,12 +298,11 @@ int MemoryManagementUnit::readTLBtable(int x, MM& r)
 
 void MemoryManagementUnit::TLBpageIn(TLBentries tlbE[], int TLBnum, MM& r)
 {
-	//pageT[page].frameNumber= freeFrames();
-	pageT[page].frameNumber = r.checkArrStatusforDirty();
-	cout << "went into page in and set frame number to " << pageT[page].frameNumber << "for page " << page << endl;
-	pageT[page].valid = true;
-	//cout << "set page " << page << "'s frame number to " << pageT[page].frameNumber << endl;
-	//cout << "went into page in and set valid for "<< page << endl;
+	
+	
+	
+	
+	
 }
 
 */
