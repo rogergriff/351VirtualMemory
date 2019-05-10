@@ -45,7 +45,7 @@ using namespace std;
 
 
 struct PTE{ //Page Table Entry
-  unsigned char frameNumber = 0;
+  int frameNumber = 0;
   bool valid = false;
 };
 
@@ -57,15 +57,15 @@ struct PCB{ //Process control block
 
 class MM{ //Memory Manager for OS
      private:
-      //  freeFrames(); //which frames are free, if any??
+      //int freeFrames(); //which frames are free, if any??
        // MM(); //constructor??
         PCB pageTable;
      public:
         MM(); //constructor creates pcb
-	int readPageTable(int, MemoryManagementUnit&);
+	int readPageTable(int, MemoryManagementUnit&, RAM&);
         //MM instance();//?
         //bool operator=(); //?
-        void pageIn(PTE[], int); //bring in page via demand paging, see 10.2 in book
-
+        void pageIn(PTE[], int,RAM&); //bring in page via demand paging, see 10.2 in book
+};
 
 #endif
