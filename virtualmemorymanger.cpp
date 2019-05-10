@@ -265,6 +265,31 @@ MemoryManagementUnit::MemoryManagementUnit()
 
 
 
+/* TLB
+
+int MemoryManagementUnit::readTLBtable(int x, Ram& r)
+{
+	if(TLBtable.myTLBtable[x].valid == true)
+	{
+		addTLBaccess();
+		return TLBtable.myTLBtable[x].frameNumber;
+	}
+	
+	else if(TLBtbale.myTLBtable[x].valid == false)
+	{
+		addTLBfaults();
+		pageIn(TLBtable.myTLBtable, x, r);
+		return readTLBtable(x, r);
+	}
+	
+	return 0;
+}
+
+*/
+
+
+
+
 //
 int MemoryManagementUnit::pageAccesses()
 {
@@ -287,6 +312,7 @@ void MemoryManagementUnit::addPageFaults()
 	++Page_Faults;
 }
 
+
 /*
 int MemoryManagementUnit:: TLB_Accesses()
 {
@@ -294,26 +320,39 @@ int MemoryManagementUnit:: TLB_Accesses()
 }
 */
 
-/*
-void MemoryManagementUnit:: addTLB_Accesses()
-{
-	//
-	
-}
-*/
-
+		
 /*
 int MemoryManagementUnit:: TLB_Faults()
 {
-	return TLB_Faults;//counts how many tlb faults
+	return TLB_Faults;	//counts how many tlb faults
 }
 */
+
+	
+	
 /*
-void MemoryManagementUnit::addTLB_Faults
+void MemoryManagementUnit::addTLBaccess()
+{
+	++TLB_AccCount;
+}
+*/
+	
+	
+/*
+void MemoryMangementUnit::addTLBfaults()
+{
+	++TLB_Faults;
+}
+*/
  
+ 
+ 
+/* 
 In hardware.h it should be:
 bool operator=( const MemoryManagementUnit& ) const;
 */
+	
+	
 /*
 bool MemoryManagementUnit:: operator=( const MemoryManagementUnit & a ) const
 {
@@ -330,21 +369,29 @@ BackingStore::BackingStore()
 {
 }
 */
+	
+	
 /*
 BackingStore:: ~BackingStore()
 {
 }
 */
+	
+	
 /*
 BackingStore BackingStore::instance()
 {
 }
 */
+	
+	
 /*
 bool BackingStore :: opertor=()
 {
 }
 */
+	
+	
 /*
 void BackingStore :: read()
 {
