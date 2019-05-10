@@ -98,6 +98,161 @@ Then it shifts it by 8 to get the page table number. */
 
 
 
+//OPERATING SYSTEM.HPP FUNCTIONS 
+
+
+
+//go into page table array, page 0 to page 255
+// processControlBlock struct will contain the page table
+/*	if there then we get a frame number
+	{
+	
+	}
+	if not available == Page Fault{
+		- Backingstore.bin will be used if there is a page fault
+		- backingstore.bin is size 256
+		- Ex: if we need pg.15 but it resulted in  page fault, in order to find it from the bin
+			we can use 256 * 15 to find the beginning of the corresponding frame number
+	}
+	
+*/
+		
+//Frame number is allocated
+	
+//Go to required frame
+
+//While in frame, use offset to go to the beginning of a specific line
+	
+//read out whatever is in that specific frame
+	
+
+  
+/*
+PRA::~PRA()
+{
+
+};
+*/
+ 
+
+
+/*
+Word PRA::findVictim (){
+  
+};
+*/
+
+
+
+/*
+Word PRA::getPRA (){
+  
+}; 
+*/
+ 
+
+
+/*
+Word PRA::updateUsage(){
+  
+};
+*/
+
+
+
+// from struct FIFO in Class PRA 
+/*
+Word PRA FIFO::findVictim(){
+};
+*/
+
+
+
+/*
+Word PRA FIFO::FIFO(); 
+*/ 
+
+//From class LRU:public PRA   
+/*
+Word LRU::findVictim(){
+  
+};
+*/
+  
+
+/*
+LRU::LRU (){
+
+};
+*/
+ 
+
+
+/*
+void LRU::updateUsage(){
+
+};
+*/
+
+//MEMORY MANAGER      
+MM::MM()
+{
+	PCB block;
+	//for(int i=0; i <256; ++i){ //code for debugging
+	//cout << "for block.myPageTable[" << i << "].frameNumber we have a value of:" << block.myPageTable[i].frameNumber << endl;
+	//cout << "for block.myPageTagle[" << i << "].valid we have a value of :" << block.myPageTable[i].valid << endl;
+}
+
+  
+/*
+MM MM::instance(){
+};
+*/
+    
+/*
+bool MM::operator=(){
+};
+*/
+
+
+int MM::readPageTable(int x, MemoryManagementUnit& u,RAM& r)
+{
+	if(pageTable.myPageTable[x].valid == true)
+	{
+		//cout<< "found entry for page " << x <<  "and it was " << pageTable.myPageTable[x].frameNumber << endl;
+		u.addPageAccesses();	
+		return pageTable.myPageTable[x].frameNumber;
+	}
+	
+	else if(pageTable.myPageTable[x].valid == false)
+	{
+		//cout << "failed to find page " << x << ", using page in \n";	
+		u.addPageFaults();	
+		pageIn(pageTable.myPageTable, x, r);
+		return readPageTable(x,u,r);
+	}
+	/*else
+	cout << "error reading page table"<< endl;*/
+	return 0;
+
+}  
+
+void MM::pageIn(PTE pageT[], int page, RAM& r)
+{
+	//pageT[page].frameNumber= freeFrames();
+	pageT[page].frameNumber = r.checkArrStatusforDirty();
+	cout << "went into page in and set frame number to " << pageT[page].frameNumber << "for page " << page << endl;
+	pageT[page].valid = true;
+	//cout << "set page " << page << "'s frame number to " << pageT[page].frameNumber << endl;
+	//cout << "went into page in and set valid for "<< page << endl;
+}
+  
+           
+
+
+
+
+//HARWARE.HPP FUNCTIONS/OBJECTS
 
 int Word::uin32_t(uint32_t x)
 {
@@ -120,150 +275,10 @@ Word address::offset(int x, vector<uint32_t> a)
 }
 
 
-// read in logical addresses from address.txt --- done 
-// mask bits to get page number and offset ----- done 
-
-/* 	a "Word" type will be created
-	
-*/
-	
-//tlb
-
-//go into page table array, page 0 to page 255
-// processControlBlock struct will contain the page table
-/*	if there then we get a frame number
-	{
-	
-	}
-	if not available == Page Fault{
-		- Backingstore.bin will be used if there is a page fault
-		- backingstore.bin is size 256
-		- Ex: if we need pg.15 but it resulted in  page fault, in order to find it from the bin
-			we can use 256 * 15 to find the beginning of the corresponding frame number
-	}
-	
-*/
-		
-//Frame number is allocated
-	
-//Go to required frame
-//While in frame, use offset to go to the beginning of a specific line
-	
-
-//read out whatever is in that specific frame
-	
-	
-//}
-  
-/*
-//OS header functions
-PRA::~PRA();
-*/
-  
-/*
-Word PRA::findVictim (){
-  
-};
-*/
-  
-/*
-Word PRA::getPRA (){
-  
-}; 
-*/
-  
-/*
-Word PRA::updateUsage(){
-  
-};
-*/
-  
-// from struct FIFO in Class PRA
-  
-/*
-Word PRA FIFO::findVictim(){
-};
-  */
-  
-/*
-Word PRA FIFO::FIFO(); 
-*/ 
-//From class LRU:public PRA
-    
-/*
-Word LRU::findVictim(){
-  
-};
-*/
-  
-/*
-LRU::LRU ();
-  */
-  
-/*
-void LRU::updateUsage(){
-};
-  */
-//From Class Memory Manager  
-    
-MM::MM()
-{
-	PCB block;
-	//for(int i=0; i <256; ++i){ //code for debugging
-	//cout << "for block.myPageTable[" << i << "].frameNumber we have a value of:" << block.myPageTable[i].frameNumber << endl;
-	//cout << "for block.myPageTagle[" << i << "].valid we have a value of :" << block.myPageTable[i].valid << endl;
-}
-
-  
-/*
-MM MM::instance(){
-};
-*/
-    
-/*
-bool MM::operator=(){
-};
-*/
-    
-int MM::readPageTable(int x, MemoryManagementUnit& u,RAM& r)
-{
-	if(pageTable.myPageTable[x].valid == true)
-	{
-		//cout<< "found entry for page " << x <<  "and it was " << pageTable.myPageTable[x].frameNumber << endl;
-		u.addPageAccesses();	
-		return pageTable.myPageTable[x].frameNumber;
-	}
-	
-	else if(pageTable.myPageTable[x].valid == false)
-	{
-		//cout << "failed to find page " << x << ", using page in \n";	
-		u.addPageFaults();	
-		pageIn(pageTable.myPageTable, x, r);
-		return readPageTable(x,u,r);
-	}
-/*else
-	cout << "error reading page table"<< endl;*/
-	return 0;
-
-}  
-
-void MM::pageIn(PTE pageT[], int page, RAM& r)
-{
-	//pageT[page].frameNumber= freeFrames();
-	pageT[page].frameNumber = r.checkArrStatusforDirty();
-	cout << "went into page in and set frame number to " << pageT[page].frameNumber << "for page " << page << endl;
-	pageT[page].valid = true;
-	//cout << "set page " << page << "'s frame number to " << pageT[page].frameNumber << endl;
-	//cout << "went into page in and set valid for "<< page << endl;
-}
-  
-           
 
 
- //class Memory Management Unit
-//begin
-//default constructor
 
+//MEMORY MANAGEMENT UNIT
 MemoryManagementUnit::MemoryManagementUnit()
 {
 	Page_AccCount = 0;
@@ -274,8 +289,8 @@ MemoryManagementUnit::MemoryManagementUnit()
 
 
 
-/* TLB
-
+//TLB
+/* 
 int MemoryManagementUnit::readTLBtable(int x, MM& r)
 {
 	if(TLBtable.myTLBtable[x].valid == true)
@@ -310,7 +325,7 @@ void MemoryManagementUnit::TLBpageIn(TLBentries tlbE[], int TLBnum, MM& r)
 
 
 
-//
+//PAGE ACCESSES AND PAGE FAULTS
 int MemoryManagementUnit::pageAccesses()
 {
 	return Page_AccCount;
@@ -333,6 +348,8 @@ void MemoryManagementUnit::addPageFaults()
 }
 
 
+
+//TLB ACCESSES AND FAULTS
 /*
 int MemoryManagementUnit:: TLB_Accesses()
 {
@@ -384,28 +401,26 @@ bool MemoryManagementUnit:: operator=( const MemoryManagementUnit & a ) const
 
 //word
 
-backing store
-BackingStore::BackingStore()
-{
- streampos size;
-  char * info;
+//BACKING STORE
+	
+BackingStore::BackingStore(){
+	streampos size;
+  	char * info;
 
-  ifstream file ("BACKING_STORE.bin", ios::in|ios::binary|ios::ate);
-  if (file.is_open())
-  {
-    size = file.tellg();
-    info = new char [size];
-    file.seekg (0, ios::beg);
-    file.read (info, size);
-    file.close();
-
-    cout << "all file content is in memory";
-
-    delete[] info;
-  }
-  else cout << "Cannot Open backing store file";
-  return 0;
-
+	ifstream file ("BACKING_STORE.bin", ios::in|ios::binary|ios::ate);
+	if (file.is_open())
+  	{
+		size = file.tellg();
+		info = new char [size];
+		file.seekg (0, ios::beg);
+		file.read (info, size);
+		file.close();
+		cout << "all file content is in memory";
+		delete[] info;
+  	}
+  	
+	else cout << "Cannot Open backing store file";
+	return 0;
 }
 
 	
@@ -458,12 +473,17 @@ RAM RAM::instance()
 {
 }
 */
+	
+	
 /*
 //bool operator=();
 Bool RAM::operator=()
 {
 }
 */
+	
+	
+	
 /*
 //idk if this is correct
 void RAM::read<T>()
