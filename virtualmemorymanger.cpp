@@ -267,7 +267,7 @@ MemoryManagementUnit::MemoryManagementUnit()
 
 /* TLB
 
-int MemoryManagementUnit::readTLBtable(int x, Ram& r)
+int MemoryManagementUnit::readTLBtable(int x, MM& r)
 {
 	if(TLBtable.myTLBtable[x].valid == true)
 	{
@@ -278,11 +278,23 @@ int MemoryManagementUnit::readTLBtable(int x, Ram& r)
 	else if(TLBtbale.myTLBtable[x].valid == false)
 	{
 		addTLBfaults();
-		pageIn(TLBtable.myTLBtable, x, r);
+		TLBpageIn(TLBtable.myTLBtable, x, r);
 		return readTLBtable(x, r);
 	}
 	
 	return 0;
+}
+
+
+
+void MemoryManagementUnit::TLBpageIn(TLBentries tlbE[], int TLBnum, MM& r)
+{
+	//pageT[page].frameNumber= freeFrames();
+	pageT[page].frameNumber = r.checkArrStatusforDirty();
+	cout << "went into page in and set frame number to " << pageT[page].frameNumber << "for page " << page << endl;
+	pageT[page].valid = true;
+	//cout << "set page " << page << "'s frame number to " << pageT[page].frameNumber << endl;
+	//cout << "went into page in and set valid for "<< page << endl;
 }
 
 */
