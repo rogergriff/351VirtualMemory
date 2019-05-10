@@ -363,12 +363,31 @@ bool MemoryManagementUnit:: operator=( const MemoryManagementUnit & a ) const
 
 
 //word
-/*
-//backing store
+
+backing store
 BackingStore::BackingStore()
 {
+ streampos size;
+  char * info;
+
+  ifstream file ("BACKING_STORE.bin", ios::in|ios::binary|ios::ate);
+  if (file.is_open())
+  {
+    size = file.tellg();
+    info = new char [size];
+    file.seekg (0, ios::beg);
+    file.read (info, size);
+    file.close();
+
+    cout << "all file content is in memory";
+
+    delete[] info;
+  }
+  else cout << "Cannot Open backing store file";
+  return 0;
+
 }
-*/
+
 	
 	
 /*
