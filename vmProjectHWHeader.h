@@ -18,29 +18,52 @@ class MemoryManagementUnit{
 	//	MemoryManagementUnit();
 		int Page_AccCount;
 		int Page_Faults;
-		//tlb_ :TLB
-	//	int TLB_AccCount;
-	//	int TLB_Faults;
+	
+		//TLB TLBtable;
+	
+		//int TLB_AccCount;
+		//int TLB_Faults;
 	public:
 		//void clearTLB(); //clear the buffer
 		MemoryManagementUnit(); //initialize?
 	
 		//MemoryManagementUnit( , );
-	//
-	//	MemoryManagementUnit instance();
-	//	MemoryManagementUnit operator=();
+	
+		//MemoryManagementUnit instance();
+		//MemoryManagementUnit operator=();
 		int pageAccesses();
 		int pageFaults();
 		void addPageAccesses();
 		void addPageFaults();
 
 	
-//void read<T>();
+		//void read<T>();
+	
+		//TLB stuff
+		//int readTLBtable(int, Ram& );
 		//int TLB_Accesses();
 		//int TLB_Faults();
-		//void addTLB_Accesses();
-		//void addTLB_Faults();
+		//void addTLBaccesses();
+		//void addTLBfaults();
+		//void pageIn(TLBentries[]. int, RAM&);
+	
 };
+/*
+more TLB stuff
+
+struct TLBentries{
+	int pageNumber;
+	int frameNumber;
+};
+
+struct TLB{
+	TLBentries myTLBtable[16];
+};
+
+
+*/
+
+
 
 //class PageFault: public MMU{ 
 //	// private:
