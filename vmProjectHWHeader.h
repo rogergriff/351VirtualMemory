@@ -4,19 +4,19 @@ Group Members:	Roger Griffin
 		Luisfernando Gomez
 		Jimena Murillo
 		TEAM #17
+		
+Hardware hpp file
 *********************************/
 /*
-
 Hardware controls the following:
-
 Memory Management Unit
 Page Faults
 Word
 Addresses
 Backing Store
 Ram
-
 */
+
 
 #ifndef HARDWARE_H
 #define HARDWARE_H
@@ -27,8 +27,7 @@ using namespace std;
 
 
 
-
-/*	Struct type Word	*/
+/********** WORD **********/
 //Word: 
 struct Word { 
 	int u_int;
@@ -37,7 +36,7 @@ struct Word {
 
 
 
-/*	Struct type Address	*/
+/********** ADDRESS **********/
 //Address: Members of this struct are type Word
 struct address {
 		//Word address(); //we need to rename this somehow so it doesnt throw up an error constantly
@@ -48,7 +47,7 @@ struct address {
 
 
 
-/*	Class type Backing Store	*/
+/********** BACKING STOE **********/
 //Loads the needed frames from the Backing_Store.bin file
 //will only be used when a page fault occurs
 class BackingStore{ 
@@ -66,7 +65,7 @@ class BackingStore{
 
 
 
-/*	struct type Frame	*/
+/********** FRAME **********/
 // will be used in the class type RAM
 struct Frame{
 	void fillFrame(unsigned char[]);	//fills a single frame with an unsigned char once the char is pulled from memory or bin file
@@ -76,7 +75,7 @@ struct Frame{
 
 
 
-/*	Struct type Status	*/
+/********** Status **********/
 //Status: Monitors if a speific frame number was been accessed (read or written too)
 //and if its considered dirty
 //will be used in the class type RAM
@@ -88,7 +87,7 @@ struct Status{
 
 
 
-/*	Struct type RAM		*/
+/********** RAM	**********/
 //Frames will be stored and updated into RAM class
 class RAM{ 
 	//private:		//should this section be private??	
@@ -106,7 +105,7 @@ class RAM{
 };
 
 
-/*	Struct of TLB entries		*/
+/********** TLB ENTRIES **********/
 //This struct will monitor the page number and frame number of the TLB entries
 struct tlbEntry{
 	int pageNumber = -1;	//All 16 TLB entries will contain a page number
@@ -115,7 +114,7 @@ struct tlbEntry{
 
 
 
-/* 	Class type Memory Management Unit	*/
+/********** MEMOR MANAGEMENT UNIT **********/
 //
 class MemoryManagementUnit{ 
 	/*struct PageFault {		//DELETE
@@ -148,6 +147,7 @@ class MemoryManagementUnit{
 		int TLBFaults();		//returns the count of TLB faults
 		void addTLBAccesses();		//increments the count of TLB accesses
 		void addTLBFaults();		//increments the count of TLB faults
+		
 		void Replace(tlbEntry);		
 		void updateUsageLRU(tlbEntry);
 		//tlbEntry readPageTable(int, MemoryManagementUnit&, RAM&);
@@ -162,7 +162,7 @@ class MemoryManagementUnit{
 };
 
 
-
+//DELETE
 //class PageFault: public MMU{ 
 //	private:
 //	
