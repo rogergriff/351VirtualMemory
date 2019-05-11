@@ -11,45 +11,42 @@ using namespace std;
 #include "OS.h"
 
 
-
-
-
-
-
-
-int main() { 
-  
-		int aSize = 0;
-		//int size = 999;
+int main()
+{ 	
+	int aSize = 0;
+	
+	//int size = 999;	
+	//vector<uint32_t> a(size);
+	//Word page;  //delete before turning in if the program works
 		
-		//vector<uint32_t> a(size);
-		//Word page;  //delete before turning in if the program works
-		Word offset;
-		//uint32_t a;
-		//int page;  //delete before turning in
-		//int offset;	//delete before turning in	
-		Word page_table_number;
-		address add;
-		MM memory;
-		MemoryManagementUnit unit;
-		RAM ram;
-		float page_fault_rate;
-		float tlb_hit_rate;
-		int frame;
-		int o;
-		tlbEntry e;
-		BackingStore b;
-cout << "Logical Address \tPhysical Address \tUnsigned Byte Value\n";
-    ifstream myfile("addresses.txt");
+	Word offset;
+	
+	//uint32_t a;
+	//int page;  //delete before turning in
+	//int offset;	//delete before turning in	
+		
+	Word page_table_number;
+	address add;
+	MM memory;
+	MemoryManagementUnit unit;
+	RAM ram;
+	float page_fault_rate;
+	float tlb_hit_rate;
+	int frame;
+	int o;
+	tlbEntry e;
+	BackingStore b;
+	cout << "Logical Address \tPhysical Address \tUnsigned Byte Value\n";
+    	ifstream myfile("addresses.txt");
 	ofstream output("output.txt");
-	if(myfile.is_open()){
-		
-
+	
+	if(myfile.is_open())
+	{	
 		while(true)
-			{
-				uint32_t x;
-				myfile >> x;
-				if (myfile.eof())
+		{
+			uint32_t x;
+			myfile >> x;
+			if (myfile.eof())
 				{
 					break;
 				}
