@@ -1,3 +1,21 @@
+/*********************************
+CPSC 351 Section 04
+Group Members:	Roger Griffin
+		Luisfernando Gomez
+		Jimena Murillo
+		TEAM #17
+		
+Operating System hpp file
+*********************************/
+/*
+The operting system will contro the following in a virtual memory manager:
+Page Replacement Algorithms:
+	LRU and FIFO
+Process Control Block
+Memory Manager
+Page Table Entry
+
+*/
 #ifndef OS_H
 #define OS_H
 #include <iostream>
@@ -5,8 +23,6 @@
 #include "HARDWARE.h"
 using namespace std;
 
-
-//this will be the header file for the OS part our project
 
 
 /*class PRA{ //Page replacement algorithm
@@ -44,28 +60,33 @@ using namespace std;
 */
 
 
-struct PTE{ //Page Table Entry
-  int frameNumber = 0;
-  bool valid = false;
+/********** PAGE TABLE ENTRY **********/
+struct PTE{
+	int frameNumber = 0;	//frame number place holder initially 0
+	bool valid = false;	//page table entry initially invalid 
 };
 
 
-struct PCB{ //Process control block
-  PTE myPageTable[256];
-}; //usually would contain more, but this is all we care about for the project
+/********** PROCESS CONTROL BLOCK **********/
+struct PCB{
+	PTE myPageTable[256];	//usually would contain more, but for this project a page tabel of 256 is all that is needed
+}; 
 
 
-class MM{ //Memory Manager for OS
-     private:
-      //int freeFrames(); //which frames are free, if any??
-       // MM(); //constructor??
-        PCB pageTable;
-     public:
-        MM(); //constructor creates pcb
-	tlbEntry readPageTable(int, MemoryManagementUnit&, RAM&,BackingStore&);
-        //MM instance();//?
-        //bool operator=(); //?
-        void pageIn(PTE[], int, RAM&, BackingStore&); //bring in page via demand paging, see 10.2 in book
+/********* MEMORY MANGER *********/
+class MM{ 
+	private:
+		//int freeFrames(); //which frames are free, if any??
+		// MM(); //constructor??
+		PCB pageTable;
+	public:
+		MM(); //constructor creates pcb
+		tlbEntry readPageTable(int, MemoryManagementUnit&, RAM&,BackingStore&);
+		//MM instance();//?
+		//bool operator=(); //?
+		void pageIn(PTE[], int, RAM&, BackingStore&); //bring in page via demand paging, see 10.2 in book
 };
+
+
 
 #endif
