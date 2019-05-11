@@ -1,3 +1,20 @@
+/*********************************
+CPSC 351 Section 04
+Group Members:	Roger Griffin
+		Luisfernando Gomez
+		Jimena Murillo
+		TEAM #17
+*********************************/
+/*
+Hardware controls the following:
+Memory Management Unit
+Page Faults
+Word
+Addresses
+Backing Store
+Ram
+*/
+
 #ifndef HARDWARE_H
 #define HARDWARE_H
 #include <iostream>
@@ -6,54 +23,63 @@
 using namespace std;
 
 
-// Memory Management Unit
+//struct of TLB entries
 struct tlbEntry{
-int pageNumber = -1;
-int frameNumber = -1;
-};
-struct Frame{
-		void fillFrame(unsigned char[]);
-		unsigned char readFrame(int);
-		unsigned char data[256];
-	
+	int pageNumber = -1;	//All 16 TLB entries will contain a page number
+	int frameNumber = -1;	//each TLB entry will also contain a frame number
 };
 
+
+//struct type Frame
+struct Frame{
+	void fillFrame(unsigned char[]);	//fills a single frame with an unsigned char once the char is pulled from memory or bin file
+	unsigned char readFrame(int);		//
+	unsigned char data[256];		
+};
+
+//struct type Status
+//Stu
 struct Status{
 	int frameNumber;
 	bool accessed = false;
 	bool dirty = true;
 };
 
+//
+//
 struct Word { 
 	int u_int;
 	int uin32_t(uint32_t);
-	
-
 };
-			
+
+//
+//
 struct address {
 		//Word address(); //we need to rename this somehow so it doesnt throw up an error constantly
 		Word offset(uint32_t);
 		//Word frame();
 		Word page(uint32_t);
-	};
+};
 
-class BackingStore{ //loads the contents of BACKING_STORE.bin to the program at the start i think
+//Loads the contents of the Backing_Store.bin file
+//will only be used when a page fault occurs
+class BackingStore{ 
 	private: 
 		//BackingStore();
 		
 	public:
-	
-	BackingStore();
-	~BackingStore();  //destructor
-//	BackingStore instance();  //  in main.cpp:
- 		//	BS BS::instance(  ){} 
-//	BackingStore operator=();
-	void read(int, Frame[]);
+		BackingStore();			//constructor - will open the binary file
+		~BackingStore();  		//destructor - will close the binary file once read from
+		//BackingStore instance();  	
+ 		//BS BS::instance(  ){} 
+		//BackingStore operator=();
+		void read(int, Frame[]);	//
 };
-	
-class RAM{ //where we're storing our frames/frames table i think
-	private:
+
+
+//
+//Frames will be stored and updated into RAM
+class RAM{ 
 		//RAM();
 		int frameSize = 256;
 		Frame framesTable[256];
