@@ -405,8 +405,10 @@ bool MemoryManagementUnit:: operator=( const MemoryManagementUnit & a ) const
 	
 BackingStore::BackingStore()
 {
-	
-	
+	ifstream file ("BACKING_STORE.bin", ios::in|ios::binary|ios::ate);
+	memcpy( x, p * 256, 255);
+	static cast<unsigned char> x;
+	fT[p]=x;
 }
 
 	
