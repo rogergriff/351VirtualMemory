@@ -1,12 +1,13 @@
 /*********************************
-CPSC 351 Section 04
-Group Members:	Roger Griffin
-		Luisfernando Gomez
-		Jimena Murillo
+CPSC 351
+Group Members:	Roger Griffin - Section 01
+		Luisfernando Gomez - Section 04
+		Jimena Murillo - Section 04
 		TEAM #17
 		
-Operating System hpp file
+MAIN CPP
 *********************************/
+
 /*
 The operting system will contro the following in a virtual memory manager:
 Page Replacement Algorithms:
