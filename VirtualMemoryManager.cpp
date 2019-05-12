@@ -26,18 +26,7 @@ using namespace std;
 int main()
 { 	
 	int aSize = 0;			//Measuered size of file, incremented after each time an address is read in
-	
-	//int size = 999;		//DELETE
-	//vector<uint32_t> a(size);	//DELETE
-	//Word page;  			//DELETE 
-		
 	Word offset;			//name for the offset thatwill be obtained
-	
-	//uint32_t a;			//DELETE
-	//int page;  			//DELETE
-	//int offset;			//DELETE	
-	
-	//variables to accesses classes and structs
 	Word page_table_number;		 
 	address add;			
 	MM memory;			
@@ -101,7 +90,7 @@ int main()
 		
 		cout << "page faults is " << unit.pageFaults() << "\t aSize is " << aSize << endl;		//prints out page fault and the page at which it occured
 		page_fault_rate = (static_cast<float> (unit.pageFaults())/static_cast<float> (aSize)) * 100;	//calculte page fault rte
-		cout << "\n\n\n\n\n\n\nThe page fault rate was:" << page_fault_rate << "%\n";			// << (unit.pageFaults()/aSize) * percent<<"%\n"; //prints out rate
+		cout << "\n\n\n\n\n\n\nThe page fault rate was:" << page_fault_rate << "%\n";			//prints out page fault rate
 
 		tlb_hit_rate = (static_cast<float> (unit.TLBAccesses())/static_cast<float> (aSize)) * 100; 	//calcuates TLB hit rate
 		cout << "The TLB Hit rate was:" << tlb_hit_rate << "%\n";					//printsout TLB rate
@@ -120,7 +109,7 @@ int main()
 /********** UINT32_t - HARDWARE **********/
 int Word::uin32_t(uint32_t x)
 {
-	u_int = static_cast<int> (x);	//casting from type uint32_t to int
+	u_int = static_cast<int> (x);		//casting from type uint32_t to int
 	return x;			
 }
 
@@ -184,30 +173,22 @@ tlbEntry MM::readPageTable(int x, MemoryManagementUnit& u, RAM& r, BackingStore&
 /********** PAGE IN - OS **********/
 void MM::pageIn(PTE pageT[], int page, RAM& r,BackingStore& backing)
 {
-	//pageT[page].frameNumber= freeFrames();		//DELETE
-	//cout << "no seg fault before pageIn\n";		//DELETE
 	pageT[page].frameNumber = r.FreeFrames(page,backing);	//Since it wasn't in the page table, need to link it to a frame from the free frames available
-	//cout << "went into page in and set frame number to " << pageT[page].frameNumber << "for page " << page << endl;	//DELETE
 	pageT[page].valid = true;				//Set valid bit to true so we know its a valid page and can thus be used in the future.
-	//cout << "set page " << page << "'s frame number to " << pageT[page].frameNumber << endl;	//DELETE
-	//cout << "went into page in and set valid for "<< page << endl;				//DELETE
 }
            
 
 
 /********** MEMEORY MANAGEMENT UNIT CONSTRUCTOR - HARDWARE**********/
 MemoryManagementUnit::MemoryManagementUnit(){
-	Page_AccCount = 0;		//initialize page access count to 0
-	Page_Faults = 0;		//initializes page fault count to 0
-	//TLB_AccCount = 0;		//DELETE
-	//TLB_Faults = 0;		//DELETE
-	clearTLB();			//clears TLB
+	Page_AccCount = 0;				//initialize page access count to 0
+	Page_Faults = 0;				//initializes page fault count to 0
+	clearTLB();					//clears TLB
 }
 
 
 /********** IN TLB - HARDWARE **********/
-//?
-bool MemoryManagementUnit::inTLB(int x)		//Checks if an entry is in the TLB
+bool MemoryManagementUnit::inTLB(int x)			//Checks if an entry is in the TLB
 {
 	for(int i = 0; i < 16; ++i)
 	{
@@ -297,19 +278,13 @@ int MemoryManagementUnit::readTLBTable(int x)
 		if(tBuffer[i].pageNumber == x)
 		{
 			e = tBuffer[i];
-			//cout << "found page " << x << " in tlb table, returning " << e.frameNumber << endl;
-			updateUsageLRU(e);  //comment out this line to change from LRU to FIFO
+			updateUsageLRU(e);  		//comment out this line to change from LRU to FIFO
 			return e.frameNumber;			
-		}
-/*	
-	}
-	e = m.readPageTable(x,r,u);
-	Replace(e);
-	cout << "didn't find e in tlb table, did replace, returning " << e.frameNumber << endl;	
-*/	
+		}	
 	}
 	return 0;
 }
+
 
 
 /********** UPDATE USAGE LRU - HARDWARE **********/
@@ -335,7 +310,6 @@ void MemoryManagementUnit::Replace(tlbEntry e)
 	}
 	
 	tBuffer[15] = e;			//new last entry added
-	//cout << "putting page " << e.pageNumber << " which is frame " << e.frameNumber << "at the end of tlb table.\n";	//DELETE
 }
 
 
@@ -368,61 +342,24 @@ BackingStore:: ~BackingStore()
 }
 
 
-/*
-BackingStore BackingStore::instance()		//DELETE
-{
-}
-*/
-/*
-bool BackingStore :: opertor=()			//DELETE
-{
-}
-*/
-
 
 /********** READ - HARWARE **********/
 //reads from the backing_store.bin file
 void BackingStore :: read(int p, Frame fT[256])	
 {
-	//if reading a frame at a time			//DELETE
-	//x= read from backing store code		//DELETE
-	//fT[p] = x;					//DELETE
-	//if can't read frame at a time			//DELETE
-	//fT[p].fillFrame();				//DELETE
-	//in fill frame, do a for loop that will fill in the individual bits as they are read out.	//DELETE
-	//cout << "got into backingstore read\n";	//DELETE
-	//unsigned char x;// = fT[p].readFrame();	//DELETE
-	//cout << "got a value in for x\n";		//DELETE
-	
-	int y = p*256;						//completely useless, go ahead and DELETE
-	
-	//cout << "got a value in for y\n";		//DELETE
-	//ifstream file ("BACKING_STORE.bin", ios::in|ios::binary|ios::ate);	//DELETE
-	
-	ifstream file;						//creating a variable file of type fstream to do multiple different fstream functions on
-	file.open("BACKING_STORE.bin", ios::in|ios::binary);	//Opens binary file
-	
-	//cout << "opened the .bin file\n";			//DELETE
-	
-	if(file.is_open()){					//????????? should this need curly brackets? yes, but after putting it in brackets doesnt make a difference
-		file.seekg(y);					//seeks bin file
-		char * buffer = new char [256];			//allocate new memory to read the file into
-		unsigned char * buff = new unsigned char [256];	//allocate new memory to reinterpret cast the data read from file
-		file.read(buffer,256);	
-	}//reads ???
-	
-	//memcpy( &x, &y, 255);				//DELETE
-	//cout << "did memcpy\n";			//DELETE
-	
-	buff = reinterpret_cast<unsigned char*> (buffer);	//converts signed chars to unsigned char
-	fT[p].fillFrame(buff);					//filling frames table entry with the frame we just got
-	
-	//cout << "ft[p].fillframe did its work.\n";	//DELETE
-	
-	file.close();					//closes binary file
-	
-	//cout << "file closed.\n";			//DELETE
-
+	int y = p*256;							//completely useless, go ahead and DELETE
+	ifstream file;							//creating a variable file of type fstream to do multiple different fstream functions on
+	file.open("BACKING_STORE.bin", ios::in|ios::binary);		//Opens binary file	
+	if(file.is_open())
+	{				
+		file.seekg(y);						//seeks bin file
+		char * buffer = new char [256];				//allocate new memory to read the file into
+		unsigned char * buff = new unsigned char [256];		//allocate new memory to reinterpret cast the data read from file
+		file.read(buffer,256);					//reads buffer
+	}							
+	buff = reinterpret_cast<unsigned char*> (buffer);		//converts signed chars to unsigned char
+	fT[p].fillFrame(buff);						//filling frames table entry with the frame we just got
+	file.close();							//closes binary file
 }
 
 
@@ -435,33 +372,16 @@ RAM::RAM()
 	for(int i = 0; i<256; ++i)
 	{
 		arrStatus[i].frameNumber = i;		//initializes the frames table array........
-		//cout << "created a frame # " << arrStatus[i].frameNumber << "\taccessed is " << arrStatus[i].accessed << "\tdirty is " << arrStatus[i].dirty << endl;
 	}
-	
-	//cout << "created a ram ";			//DELETE
-	//for(int i = 0; i < frameSize; ++i)		//DELETE
-	//cout << "frame " << i << " created and has value of " << framesTable[i].data << endl;		//DELETE
 }
 
-
-/*
-RAM RAM::instance()				//DELETE
-{
-}
-*/
-/*
-//bool operator=();				//DELETE
-Bool RAM::operator=()				//DELETE
-{
-}
-*/
 
 
 
 /********** READ - HARDWARE **********/
 unsigned char RAM::read(int f, int o)
 {
-	return framesTable[f].readFrame(o);	//returns 
+	return framesTable[f].readFrame(o);		//returns physical memory from frame table
 }
 
 
@@ -469,29 +389,23 @@ unsigned char RAM::read(int f, int o)
 /********** READ FRAME - HARDWARE **********/
 unsigned char Frame:: readFrame(int o)
 {
-	//cout << "entered into readFrame\n";	
-	//for (int i = 0; i < 256; ++i)
-	return data[o];				//return
-	return 0;				//return
+	return data[o];					//return
+	return 0;					//return
 }
 
 
 
 /********** FREE FRAMES - HARDWRAE **********/
-//Uses hardware to inform if the frame is dirty ??????
+//Uses hardware to inform if the frame is dirty
 int RAM::FreeFrames(int p, BackingStore b) 
 {
 	for (int i = 0; i < 256; ++i)
 	{
 		if(arrStatus[i].dirty == true)	
 		{	
-			//cout << "no seg fault before freeFrames\n";			//DELETE
-			b.read(p, framesTable);					//reads 
-			//cout << "returned from backing store read\n";			//DELETE
-			arrStatus[i].dirty = false;				//updated the frames table, from backingstore file, so sets dirty to false
-			//cout << "set the dirty bit to false\n";			//DELETE
-			arrStatus[i].accessed = false;				//^
-			//cout << "set the accessed to false\n"; 			//DELETE
+			b.read(p, framesTable);			//reads frame table
+			arrStatus[i].dirty = false;		//updated the frames table, from backingstore file, so sets dirty to false
+			arrStatus[i].accessed = false;		//^
 			return i;
 		}
 	}	
@@ -509,3 +423,7 @@ void Frame::fillFrame(unsigned char x[])
 		data[i] = x[i];
 	}
 }
+
+
+
+//END
