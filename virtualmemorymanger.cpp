@@ -25,7 +25,7 @@ using namespace std;
 /********** MAIN *********/
 int main()
 { 	
-	int aSize = 0;			//?
+	int aSize = 0;			//Measuered size of file, incremented after each time an address is read in
 	
 	//int size = 999;		//DELETE
 	//vector<uint32_t> a(size);	//DELETE
@@ -61,15 +61,15 @@ int main()
 		{
 			uint32_t x;
 			myfile >> x;
-			if (myfile.eof())		//?
+			if (myfile.eof())		//Break out of file when reaches end
 			{
 				break;
 			}
 
-			else if(!myfile.eof())		//?
+			else if(!myfile.eof())		//if it isn't the end, increment aSize
 			{
 				//a[aSize] = x;
-				aSize++;		//?
+				aSize++;		
 			}
 		
 			else
@@ -98,7 +98,7 @@ int main()
 				frame = e.frameNumber;		
 			}
 			
-			unsigned char m = ram.read(frame,o);						//?
+			unsigned char m = ram.read(frame,o);						//sets a the unsigned char to a value to allow it to be output(wasn't working otherwise.)
 			//m << hex << m;								//DELETE
 			cout << e.pageNumber << "\t\t" << e.frameNumber << "\t\t" << m << endl;		//prints out page corresponding page num and frame num
 			//cout << hex << m << endl;							//DELETE
@@ -113,7 +113,7 @@ int main()
 	}
 	
 	myfile.close();		//closes file
-	output.close();		//?
+	output.close();		//closes output.txt since we're done writing to it
 	return 0;	
 
 }
@@ -125,7 +125,7 @@ int main()
 /********** UINT32_t - HARDWARE **********/
 int Word::uin32_t(uint32_t x)
 {
-	u_int = static_cast<int> (x);	//?
+	u_int = static_cast<int> (x);	//casting from type uint32_t to int
 	return x;			//
 }
 
@@ -173,7 +173,7 @@ Word PRA::updateUsage(){	//DELETE
 
 /********** MEMORY MANAGER - 0S **********/
 MM::MM(){
-PCB block;
+PCB block; //create our Process Control Block in the MM
 	//for(int i=0; i <256; ++i){ //code for debugging
 	//cout << "for block.myPageTable[" << i << "].frameNumber we have a value of:" << block.myPageTable[i].frameNumber << endl;
 	//cout << "for block.myPageTagle[" << i << "].valid we have a value of :" << block.myPageTable[i].valid << endl;
@@ -193,15 +193,16 @@ bool MM::operator=(){
 
 /********** READ PAGE TABLE **********/
 //shouldn't this be in MMU not MM
+//With our page table being stored in MM, we can't put it in the MMU or it wont be able to read anything
 tlbEntry MM::readPageTable(int x, MemoryManagementUnit& u, RAM& r, BackingStore& b)
 {
 	tlbEntry e;		//uses hardware- tlb entry from MMU is set
-	if(pageTable.myPageTable[x].valid == true)	//if the page number is valid in the table then continue
+	if(pageTable.myPageTable[x].valid == true)	//if the page number is valid then it is in the table then continue
 	{
-		//cout<< "found entry for page " << x <<  "and it was " << pageTable.myPageTable[x].frameNumber << endl;	//DELETE
+		//cout<< "found entry for page " << x <<  "and it was " <<  pageTable.myPageTable[x].frameNumber << endl;	//DELETE
 		u.addPageAccesses();					//page accesses count is incremented
-		e.frameNumber = pageTable.myPageTable[x].frameNumber;	//?
-		e.pageNumber = x;					//?
+		e.frameNumber = pageTable.myPageTable[x].frameNumber;	//getting the corresponding frame number that is in the page table for that page
+		e.pageNumber = x;					//setting getting the page that it is associated with, since it was passed its really easy 
 		return e;						//
 	}
 
@@ -210,8 +211,8 @@ tlbEntry MM::readPageTable(int x, MemoryManagementUnit& u, RAM& r, BackingStore&
 		//cout << "failed to find page " << x << ", using page in \n";	
 		u.addPageFaults();					//add page fault
 		//cout << "no seg fault before readPageTable\n";	//DELETE
-		pageIn(pageTable.myPageTable, x, r,b);			//?
-		return readPageTable(x,u,r,b);				//returns page table
+		pageIn(pageTable.myPageTable, x, r,b);			//if the value isn't in the page table, we need to page it into the page table
+		return readPageTable(x,u,r,b);				//recursive call to verify that it was input
 	}
 	//else						//DELETE
 	//cout << "error reading page table"<< endl;	//DELETE
@@ -226,9 +227,9 @@ void MM::pageIn(PTE pageT[], int page, RAM& r,BackingStore& backing)
 {
 	//pageT[page].frameNumber= freeFrames();		//DELETE
 	//cout << "no seg fault before pageIn\n";		//DELETE
-	pageT[page].frameNumber = r.FreeFrames(page,backing);	//?
+	pageT[page].frameNumber = r.FreeFrames(page,backing);	//Since it wasn't in the page table, need to link it to a frame from the free frames available
 	//cout << "went into page in and set frame number to " << pageT[page].frameNumber << "for page " << page << endl;	//DELETE
-	pageT[page].valid = true;				//?
+	pageT[page].valid = true;				//Set valid bit to true so we know its a valid page and can thus be used in the future.
 	//cout << "set page " << page << "'s frame number to " << pageT[page].frameNumber << endl;	//DELETE
 	//cout << "went into page in and set valid for "<< page << endl;				//DELETE
 }
@@ -247,15 +248,15 @@ MemoryManagementUnit::MemoryManagementUnit(){
 
 /********** IN TLB - HARDWARE **********/
 //?
-bool MemoryManagementUnit::inTLB(int x)		//?
+bool MemoryManagementUnit::inTLB(int x)		//Checks if an entry is in the TLB
 {
 	for(int i = 0; i < 16; ++i)
 	{
-		if(tBuffer[i].pageNumber == x)		//?
-		return true;				//?
+		if(tBuffer[i].pageNumber == x)		//reading the buffer and checking if the page number is equal to the page we are looking for
+		return true;				//it is, so return that it was found.
 	}
 	
-	return false;
+	return false;					//wnt through the whole TLB and didnt find it
 }
 
 
@@ -358,10 +359,10 @@ void MemoryManagementUnit::updateUsageLRU(tlbEntry x)
 {
 	for(int i = x.pageNumber; i<15; ++i)
 	{
-		tBuffer[i].pageNumber = tBuffer[i+1].pageNumber;	//?
-		tBuffer[i].frameNumber = tBuffer[i+1].frameNumber;	//?
+		tBuffer[i].pageNumber = tBuffer[i+1].pageNumber;	//shift the TLB up one unit from the unit that was found so that we can put the found entry at the bottom since it is now the most recently used
+		tBuffer[i].frameNumber = tBuffer[i+1].frameNumber;	//^
 	}
-	tBuffer[15] = x;
+	tBuffer[15] = x;						//putting the entry we found at the bottom
 }
   
 
@@ -371,10 +372,10 @@ void MemoryManagementUnit::Replace(tlbEntry e)
 {
 	for(int i = 0; i < 15; i++)
 	{
-		tBuffer[i] = tBuffer[i+1];	//?
+		tBuffer[i] = tBuffer[i+1];	//Shifting the whole TLB up 1 value to insert the new value at the bottom, the First one input or least recently used one are shifted out
 	}
 	
-	tBuffer[15] = e;
+	tBuffer[15] = e;			//new last entry added
 	//cout << "putting page " << e.pageNumber << " which is frame " << e.frameNumber << "at the end of tlb table.\n";	//DELETE
 }
 
@@ -385,8 +386,8 @@ void MemoryManagementUnit::clearTLB()
 {
 	for(int i = 0; i < 16; ++i)
 	{
-		tBuffer[i].pageNumber = -1;	//?
-		tBuffer[i].frameNumber = -1;	//?
+		tBuffer[i].pageNumber = -1;	//clearing the tlb, so setting pageNumber and frameNumber to something we should never index
+		tBuffer[i].frameNumber = -1;	
 	}
 }
 
@@ -434,27 +435,28 @@ void BackingStore :: read(int p, Frame fT[256])
 	//unsigned char x;// = fT[p].readFrame();	//DELETE
 	//cout << "got a value in for x\n";		//DELETE
 	
-	int y = p*256;						//?
+	int y = p*256;						//completely useless, go ahead and DELETE
 	
 	//cout << "got a value in for y\n";		//DELETE
 	//ifstream file ("BACKING_STORE.bin", ios::in|ios::binary|ios::ate);	//DELETE
 	
-	ifstream file;						//?
+	ifstream file;						//creating a variable file of type fstream to do multiple different fstream functions on
 	file.open("BACKING_STORE.bin", ios::in|ios::binary);	//Opens binary file
 	
 	//cout << "opened the .bin file\n";			//DELETE
 	
-	if(file.is_open())					//????????? should this need curly brackets?
+	if(file.is_open()){					//????????? should this need curly brackets? yes, but after putting it in brackets doesnt make a difference
 		file.seekg(y);					//seeks bin file
-		char * buffer = new char [256];			//??
-		unsigned char * buff = new unsigned char [256];	//?
-		file.read(buffer,256);				//reads ???
+		char * buffer = new char [256];			//allocate new memory to read the file into
+		unsigned char * buff = new unsigned char [256];	//allocate new memory to reinterpret cast the data read from file
+		file.read(buffer,256);	
+	}//reads ???
 	
 	//memcpy( &x, &y, 255);				//DELETE
 	//cout << "did memcpy\n";			//DELETE
 	
 	buff = reinterpret_cast<unsigned char*> (buffer);	//converts signed chars to unsigned char
-	fT[p].fillFrame(buff);					//?
+	fT[p].fillFrame(buff);					//filling frames table entry with the frame we just got
 	
 	//cout << "ft[p].fillframe did its work.\n";	//DELETE
 	
@@ -473,7 +475,7 @@ RAM::RAM()
 {
 	for(int i = 0; i<256; ++i)
 	{
-		arrStatus[i].frameNumber = i;		//sets status for frame number i
+		arrStatus[i].frameNumber = i;		//initializes the frames table array........
 		//cout << "created a frame # " << arrStatus[i].frameNumber << "\taccessed is " << arrStatus[i].accessed << "\tdirty is " << arrStatus[i].dirty << endl;
 	}
 	
@@ -527,9 +529,9 @@ int RAM::FreeFrames(int p, BackingStore b)
 			//cout << "no seg fault before freeFrames\n";			//DELETE
 			b.read(p, framesTable);					//reads 
 			//cout << "returned from backing store read\n";			//DELETE
-			arrStatus[i].dirty = false;				//???
+			arrStatus[i].dirty = false;				//updated the frames table, from backingstore file, so sets dirty to false
 			//cout << "set the dirty bit to false\n";			//DELETE
-			arrStatus[i].accessed = false;				//???
+			arrStatus[i].accessed = false;				//^
 			//cout << "set the accessed to false\n"; 			//DELETE
 			return i;
 		}
