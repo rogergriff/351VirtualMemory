@@ -39,6 +39,7 @@ struct Word {
 
 /********** ADDRESS **********/
 //Address: Members of this struct are type Word
+//Delete both commented out functions, never used them
 struct address {
 		//Word address(); //we need to rename this somehow so it doesnt throw up an error constantly
 		Word offset(uint32_t);	//at this function, the logical address will be masked to find the offset 
@@ -82,7 +83,7 @@ struct Frame{
 //will be used in the class type RAM
 struct Status{
 	int frameNumber;		//holds the specific frame number being worked on
-	bool accessed = false;		//set at false but if read or written during mnitoring interval, will be set to true
+	bool accessed = false;		//set at false but if read or written during monitoring interval, will be set to true
 	bool dirty = true;		//set as true until the content is newer than that of the backing store
 };
 
@@ -91,10 +92,10 @@ struct Status{
 /********** RAM	**********/
 //Frames will be stored and updated into RAM class
 class RAM{ 
-	//private:		//should this section be private??	
+	private:		//should this section be private?? yes because these are things that shouldn't just be accessed willy nilly	
 		//RAM();
-		int frameSize = 256;		//frame size of 256
-		Frame framesTable[256];		//frame table of struct type frame
+		int frameSize = 256;		//frame size of 256, should proably be global if we can make it
+		Frame framesTable[256];		//frame table of struct type frame 
 		Status arrStatus[256];		//array keeps track of the status for the corresonding frame number
 	public:
 		RAM();
