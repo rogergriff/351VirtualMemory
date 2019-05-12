@@ -3,98 +3,97 @@
 #include <vector>
 #include <cstring>
 #include <iomanip>
-#define FRAME_SIZE 256 // size of the frame
-#define TOTAL_NUMBER_FRAMES 256 // total number of frames in physical memory
 using namespace std;
 
 #include "HARDWARE.h"
 #include "OS.h"
 
+#define FRAME_SIZE 256 // size of the frame
+#define TOTAL_NUMBER_FRAMES 256 // total number of frames in physical memory
 
 int main()
 { 	
-	int aSize = 0;
+	int aSize = 0;	//the 
 	
 	//int size = 999;	
 	//vector<uint32_t> a(size);
 	//Word page;  //delete before turning in if the program works
 		
-	Word offset;
+	Word offset;	//name for the offset thatwill be obtained
 	
 	//uint32_t a;
-	//int page;  //delete before turning in
-	//int offset;	//delete before turning in	
-		
-	Word page_table_number;
-	address add;
-	MM memory;
+	//int page;  //DELETE
+	//int offset;	//DELETE	
+	
+	//variables to accesses classes and structs
+	Word page_table_number;		//variale type Word 
+	address add;			//
+	MM memory;			//
 	MemoryManagementUnit unit;
 	RAM ram;
-	float page_fault_rate;
-	float tlb_hit_rate;
-	int frame;
-	int o;
-	tlbEntry e;
-	BackingStore b;
-	cout << "Logical Address \tPhysical Address \tUnsigned Byte Value\n";
-    	ifstream myfile("addresses.txt");
-	ofstream output("output.txt");
+	float page_fault_rate;		//variable that wil hold the final page fault rate for statitics
+	float tlb_hit_rate;		//varible that will hold the final TLB hit rate
+	int frame;			
+	int o;				
+	tlbEntry e;			//
+	BackingStore b;			
 	
-	if(myfile.is_open())
+	
+	cout << "Logical Address \tPhysical Address \tUnsigned Byte Value\n";
+    	ifstream myfile("addresses.txt");		//read from "address.txt"
+	ofstream output("output.txt");			//output to "otput.txt"
+	
+	if(myfile.is_open())		//file opens
 	{	
-		while(true)
+		while(true)		//while open, read in from file
 		{
 			uint32_t x;
 			myfile >> x;
 			if (myfile.eof())
-				{
-					break;
-				}
+			{
+				break;
+			}
 
-				else if(!myfile.eof())
-				{
-		//			a[aSize] = x;
-					aSize++;
-				}
+			else if(!myfile.eof())
+			{
+				//a[aSize] = x;
+				aSize++;
+			}
 		
-
-				else
-				{
-				cout <<"error reading in addresses"; //should never get here, seeing how you should only ever find the eof, or find that its not eof
-				}
-				
+			else
+			{
+				cout <<"error reading in addresses"; //output error, shouldn't eer reach this point
+			}
 			
-
-	
-		
-			page_table_number = add.page(x); //gets the number to use for the page table
-			page_table_number.u_int = page_table_number.u_int>>8; //shifting the result we got so that its an appropriate page number
-			offset = add.offset(x); //get the offset to use for the frame
+			page_table_number = add.page(x);				//gets the number to use for the page table
+			page_table_number.u_int = page_table_number.u_int>>8; 		//shifting the result we got so that its an appropriate page number
+			offset = add.offset(x);						//gets the offset to use for the frame
 			o = offset.u_int;
 			
-			if(unit.inTLB(page_table_number.u_int)) //If we find it in the TLB, we can take the frame number directly and read the info from the frames table
+			if(unit.inTLB(page_table_number.u_int)) 				//If found in TLB continue with the following instructions
 			{
-				unit.addTLBAccesses();
-				frame = unit.readTLBTable(page_table_number.u_int);
+				unit.addTLBAccesses();						//add to TLB access count
+				frame = unit.readTLBTable(page_table_number.u_int);		//use the frame number to take the info from the frame table
 			}
-			else //If we didn't find it in the TLB, we see if its in the page table. If it is, we 
+				
+			else						//If not found in the TLB, look for it in the page table
 			{
-				unit.addTLBFaults();
+				unit.addTLBFaults();			//add to TLB fault count
 				//cout << "no seg fault after tlb missed\n"; 
-				e = memory.readPageTable(page_table_number.u_int, unit, ram, b);
+				e = memory.readPageTable(page_table_number.u_int, unit, ram, b);	//
 				unit.Replace(e);
 				//cout << "didn't find e in tlb table, did replace, returning " << e.frameNumber << endl;	
 				frame = e.frameNumber;		
 			}
-		unsigned char m = ram.read(frame,o);
-		//m << hex << m;
-		cout << e.pageNumber << "\t\t" << e.frameNumber << "\t\t" << m << endl;
-		//cout << hex << m << endl;	
 			
+			unsigned char m = ram.read(frame,o);
+			//m << hex << m;
+			cout << e.pageNumber << "\t\t" << e.frameNumber << "\t\t" << m << endl;
+			//cout << hex << m << endl;	
+		}
 		
-}
-cout << "page faults is " << unit.pageFaults() << "\t aSize is " << aSize << endl; 
-page_fault_rate = (static_cast<float> (unit.pageFaults())/static_cast<float> (aSize)) * 100;
+		cout << "page faults is " << unit.pageFaults() << "\t aSize is " << aSize << endl; 
+		page_fault_rate = (static_cast<float> (unit.pageFaults())/static_cast<float> (aSize)) * 100;
 cout << "\n\n\n\n\n\n\nThe page fault rate was:" << page_fault_rate << "%\n";// << (unit.pageFaults()/aSize) * percent<<"%\n";
 tlb_hit_rate = (static_cast<float> (unit.TLBAccesses())/static_cast<float> (aSize)) * 100;
 cout << "The TLB Hit rate was:" << tlb_hit_rate << "%\n";
