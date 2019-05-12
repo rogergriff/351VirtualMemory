@@ -1,9 +1,9 @@
 /*********************************
 CPSC 351
 Group Members:	Roger Griffin - Section 01
-		        Luisfernando Gomez - Section 04
-				Jimena Murillo - Section 04
-				TEAM #17
+		Luisfernando Gomez - Section 04
+		Jimena Murillo - Section 04
+		TEAM #17
 		
 OPERATING SYSTEM HPP
 *********************************/
