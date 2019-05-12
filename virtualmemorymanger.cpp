@@ -1,3 +1,13 @@
+/*********************************
+CPSC 351
+Group Members:	Roger Griffin - Section 01
+		Luisfernando Gomez - Section 04
+		Jimena Murillo - Section 04
+		TEAM #17
+		
+MAIN CPP
+*********************************/
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -8,34 +18,36 @@ using namespace std;
 #include "HARDWARE.h"
 #include "OS.h"
 
-#define FRAME_SIZE 256 // size of the frame
-#define TOTAL_NUMBER_FRAMES 256 // total number of frames in physical memory
+#define FRAME_SIZE 256 			//size of the frame
+#define TOTAL_NUMBER_FRAMES 256 	// total number of frames in physical memory
 
+
+/********** MAIN *********/
 int main()
 { 	
-	int aSize = 0;	//the 
+	int aSize = 0;			//?
 	
-	//int size = 999;	
-	//vector<uint32_t> a(size);
-	//Word page;  //delete before turning in if the program works
+	//int size = 999;		//DELETE
+	//vector<uint32_t> a(size);	//DELETE
+	//Word page;  			//DELETE 
 		
-	Word offset;	//name for the offset thatwill be obtained
+	Word offset;			//name for the offset thatwill be obtained
 	
-	//uint32_t a;
-	//int page;  //DELETE
-	//int offset;	//DELETE	
+	//uint32_t a;			//DELETE
+	//int page;  			//DELETE
+	//int offset;			//DELETE	
 	
 	//variables to accesses classes and structs
-	Word page_table_number;		//variale type Word 
-	address add;			//
-	MM memory;			//
+	Word page_table_number;		 
+	address add;			
+	MM memory;			
 	MemoryManagementUnit unit;
 	RAM ram;
 	float page_fault_rate;		//variable that wil hold the final page fault rate for statitics
 	float tlb_hit_rate;		//varible that will hold the final TLB hit rate
 	int frame;			
 	int o;				
-	tlbEntry e;			//
+	tlbEntry e;			
 	BackingStore b;			
 	
 	
@@ -43,26 +55,26 @@ int main()
     	ifstream myfile("addresses.txt");		//read from "address.txt"
 	ofstream output("output.txt");			//output to "otput.txt"
 	
-	if(myfile.is_open())		//file opens
+	if(myfile.is_open())				//file opens
 	{	
-		while(true)		//while open, read in from file
+		while(true)				//while open, read in from file
 		{
 			uint32_t x;
 			myfile >> x;
-			if (myfile.eof())
+			if (myfile.eof())		//?
 			{
 				break;
 			}
 
-			else if(!myfile.eof())
+			else if(!myfile.eof())		//?
 			{
 				//a[aSize] = x;
-				aSize++;
+				aSize++;		//?
 			}
 		
 			else
 			{
-				cout <<"error reading in addresses"; //output error, shouldn't eer reach this point
+				cout <<"error reading in addresses"; 			//output error, shouldn't eer reach this point
 			}
 			
 			page_table_number = add.page(x);				//gets the number to use for the page table
@@ -70,97 +82,96 @@ int main()
 			offset = add.offset(x);						//gets the offset to use for the frame
 			o = offset.u_int;
 			
-			if(unit.inTLB(page_table_number.u_int)) 				//If found in TLB continue with the following instructions
+			if(unit.inTLB(page_table_number.u_int)) 		//If found in TLB continue with the following instructions
 			{
-				unit.addTLBAccesses();						//add to TLB access count
-				frame = unit.readTLBTable(page_table_number.u_int);		//use the frame number to take the info from the frame table
+				unit.addTLBAccesses();					//add to TLB access count
+				frame = unit.readTLBTable(page_table_number.u_int);	//use the frame number to take the info from the frame table
 			}
 				
-			else						//If not found in the TLB, look for it in the page table
+			else							//If not found in the TLB, look for it in the page table
 			{
-				unit.addTLBFaults();			//add to TLB fault count
-				//cout << "no seg fault after tlb missed\n"; 
-				e = memory.readPageTable(page_table_number.u_int, unit, ram, b);	//
-				unit.Replace(e);
+				unit.addTLBFaults();							//add to TLB fault count
+				//cout << "no seg fault after tlb missed\n"; 				//DELETE
+				e = memory.readPageTable(page_table_number.u_int, unit, ram, b);	//Reads the page table
+				unit.Replace(e);							//Replace the tlb if page not found
 				//cout << "didn't find e in tlb table, did replace, returning " << e.frameNumber << endl;	
 				frame = e.frameNumber;		
 			}
 			
-			unsigned char m = ram.read(frame,o);
-			//m << hex << m;
-			cout << e.pageNumber << "\t\t" << e.frameNumber << "\t\t" << m << endl;
-			//cout << hex << m << endl;	
+			unsigned char m = ram.read(frame,o);						//?
+			//m << hex << m;								//DELETE
+			cout << e.pageNumber << "\t\t" << e.frameNumber << "\t\t" << m << endl;		//prints out page corresponding page num and frame num
+			//cout << hex << m << endl;							//DELETE
 		}
 		
-		cout << "page faults is " << unit.pageFaults() << "\t aSize is " << aSize << endl; 
-		page_fault_rate = (static_cast<float> (unit.pageFaults())/static_cast<float> (aSize)) * 100;
-cout << "\n\n\n\n\n\n\nThe page fault rate was:" << page_fault_rate << "%\n";// << (unit.pageFaults()/aSize) * percent<<"%\n";
-tlb_hit_rate = (static_cast<float> (unit.TLBAccesses())/static_cast<float> (aSize)) * 100;
-cout << "The TLB Hit rate was:" << tlb_hit_rate << "%\n";
+		cout << "page faults is " << unit.pageFaults() << "\t aSize is " << aSize << endl;		//prints out page fault and the page at which it occured
+		page_fault_rate = (static_cast<float> (unit.pageFaults())/static_cast<float> (aSize)) * 100;	//calculte page fault rte
+		cout << "\n\n\n\n\n\n\nThe page fault rate was:" << page_fault_rate << "%\n";// << (unit.pageFaults()/aSize) * percent<<"%\n"; //prints out rate
 
+		tlb_hit_rate = (static_cast<float> (unit.TLBAccesses())/static_cast<float> (aSize)) * 100; 	//calcuates TLB hit rate
+		cout << "The TLB Hit rate was:" << tlb_hit_rate << "%\n";					//printsout TLB rate
+	}
+	
+	myfile.close();		//closes file
+	output.close();		//?
+	return 0;	
 
 }
-myfile.close();
-output.close();
-return 0;
 
+/********** END OF MAIN **********/
+
+
+
+/********** UINT32_t - HARDWARE **********/
+int Word::uin32_t(uint32_t x)
+{
+	u_int = static_cast<int> (x);	//?
+	return x;			//
 }
 
-
-
-
-
-
-int Word::uin32_t(uint32_t x){
-u_int = static_cast<int> (x);
-return x;
+/********** PAGE - HARDWARE **********/
+Word address::page(uint32_t a)
+{
+	Word p;
+	p.u_int = p.uin32_t(a & 65280); 	//bit masking so that we get only get page bits 15 through 8
+	return p;
 }
 
-Word address::page(uint32_t a){
-Word p;
-p.u_int = p.uin32_t(a & 65280); //bit masking so that we get only bits 15 through 8
-return p;
-}
-
-Word address::offset(uint32_t a){
-Word o;
-o.u_int = o.uin32_t(a & 255);
-return o;
+/********** OFFSET - HARDWARE **********/
+Word address::offset(uint32_t a)
+{
+	Word o;
+	o.u_int = o.uin32_t(a & 255);		//bit masking to get offset bits 0 to 7
+	return o;
 }
 
   
 /*
-//OS header functions
+//OS header functions		//DELETE
 PRA::~PRA();
 */
   
 /*
-Word PRA::findVictim (){
+Word PRA::findVictim (){		//DELETE
   
 };
 */
   
 /*
-Word PRA::getPRA (){
+Word PRA::getPRA (){		//DELETE
   
 }; 
 */
   
 /*
-Word PRA::updateUsage(){
+Word PRA::updateUsage(){	//DELETE
   
 };
 */
   
-// from struct FIFO in Class PRA
-  
-
-//From class LRU:public PRA
-    
 
 
-//From Class Memory Manager  
-    
+/********** MEMORY MANAGER - 0S **********/
 MM::MM(){
 PCB block;
 	//for(int i=0; i <256; ++i){ //code for debugging
@@ -178,125 +189,149 @@ MM MM::instance(){
 bool MM::operator=(){
 };
 */
-    
+
+
+/********** READ PAGE TABLE **********/
+//shouldn't this be in MMU not MM
 tlbEntry MM::readPageTable(int x, MemoryManagementUnit& u, RAM& r, BackingStore& b)
 {
-tlbEntry e;
-if(pageTable.myPageTable[x].valid == true){
-	//cout<< "found entry for page " << x <<  "and it was " << pageTable.myPageTable[x].frameNumber << endl;
-	u.addPageAccesses();	
-	e.frameNumber = pageTable.myPageTable[x].frameNumber;
-	e.pageNumber = x;
-	return e;
-}
-else if(pageTable.myPageTable[x].valid == false){
-	//cout << "failed to find page " << x << ", using page in \n";	
-	u.addPageFaults();
-//	cout << "no seg fault before readPageTable\n";	
-	pageIn(pageTable.myPageTable, x, r,b);
-	return readPageTable(x,u,r,b);
-}
-/*else
-	cout << "error reading page table"<< endl;*/
-	return e;
+	tlbEntry e;		//uses hardware- tlb entry from MMU is set
+	if(pageTable.myPageTable[x].valid == true)	//if the page number is valid in the table then continue
+	{
+		//cout<< "found entry for page " << x <<  "and it was " << pageTable.myPageTable[x].frameNumber << endl;	//DELETE
+		u.addPageAccesses();					//page accesses count is incremented
+		e.frameNumber = pageTable.myPageTable[x].frameNumber;	//?
+		e.pageNumber = x;					//?
+		return e;						//
+	}
+
+	else if(pageTable.myPageTable[x].valid == false)	//is page number not valid in the table then continue with the following
+	{
+		//cout << "failed to find page " << x << ", using page in \n";	
+		u.addPageFaults();					//add page fault
+		//cout << "no seg fault before readPageTable\n";	//DELETE
+		pageIn(pageTable.myPageTable, x, r,b);			//?
+		return readPageTable(x,u,r,b);				//returns page table
+	}
+	//else						//DELETE
+	//cout << "error reading page table"<< endl;	//DELETE
+	return e;					
 
 } 
  
 
-void MM::pageIn(PTE pageT[], int page, RAM& r,BackingStore& backing){
-//pageT[page].frameNumber= freeFrames();
-//cout << "no seg fault before pageIn\n";
-pageT[page].frameNumber = r.FreeFrames(page,backing);
-//cout << "went into page in and set frame number to " << pageT[page].frameNumber << "for page " << page << endl;
-pageT[page].valid = true;
-//cout << "set page " << page << "'s frame number to " << pageT[page].frameNumber << endl;
-//cout << "went into page in and set valid for "<< page << endl;
 
+/********** PAGE IN - OS **********/
+void MM::pageIn(PTE pageT[], int page, RAM& r,BackingStore& backing)
+{
+	//pageT[page].frameNumber= freeFrames();		//DELETE
+	//cout << "no seg fault before pageIn\n";		//DELETE
+	pageT[page].frameNumber = r.FreeFrames(page,backing);	//?
+	//cout << "went into page in and set frame number to " << pageT[page].frameNumber << "for page " << page << endl;	//DELETE
+	pageT[page].valid = true;				//?
+	//cout << "set page " << page << "'s frame number to " << pageT[page].frameNumber << endl;	//DELETE
+	//cout << "went into page in and set valid for "<< page << endl;				//DELETE
 }
            
 
 
- //class Memory Management Unit
-//begin
-//default constructor
-
+/********** MEMEORY MANAGEMENT UNIT CONSTRUCTOR - HARDWARE**********/
 MemoryManagementUnit::MemoryManagementUnit(){
-	Page_AccCount = 0;
-	Page_Faults = 0;
-	//TLB_AccCount = 0;
-	//TLB_Faults = 0;
-	clearTLB();
+	Page_AccCount = 0;		//initialize page access count to 0
+	Page_Faults = 0;		//initializes page fault count to 0
+	//TLB_AccCount = 0;		//DELETE
+	//TLB_Faults = 0;		//DELETE
+	clearTLB();			//clears TLB
 }
 
 
-bool MemoryManagementUnit::inTLB(int x){
-for(int i = 0; i < 16; ++i)
+/********** IN TLB - HARDWARE **********/
+//?
+bool MemoryManagementUnit::inTLB(int x)		//?
+{
+	for(int i = 0; i < 16; ++i)
 	{
-		if(tBuffer[i].pageNumber == x)
-			return true;				
+		if(tBuffer[i].pageNumber == x)		//?
+		return true;				//?
 	}
+	
 	return false;
 }
-//
+
+
+
+/********** PAGE ACCESSES - HARDWARE **********/
+//returns count value for times the page table ws accessed
 int MemoryManagementUnit::pageAccesses()
 {
 	return Page_AccCount;
 }
 
 
+
+/********** PAGE TABLE - HARDWARE **********/
+//returns the page table faults count value
 int MemoryManagementUnit::pageFaults()
 {
 	return Page_Faults;
 }
 
-void MemoryManagementUnit::addPageAccesses(){
-++Page_AccCount;
+
+/********** ADD PAGE ACCESSES - HARDWARE **********/
+//increments the count of page accesses
+void MemoryManagementUnit::addPageAccesses()
+{
+	++Page_AccCount;
 }
 
-void MemoryManagementUnit::addPageFaults(){
-++Page_Faults;
+
+/********** ADD PAGE FAULTS - HARDWARE **********/
+//increments the the count of page faults
+void MemoryManagementUnit::addPageFaults()
+{
+	++Page_Faults;
 }
 
 
+
+/********** TLB ACCESSES - HARDWARE **********/
+//returns the count vlue for the times TLB was accessed
 int MemoryManagementUnit:: TLBAccesses()
 {
 	return TLB_AccCount;	
 }
 
 
-
+/********** ADD TLB ACCESSES - HARDWARE **********/
+//increments the count for TLB accesses
 void MemoryManagementUnit:: addTLBAccesses()
 {
-	++TLB_AccCount;
-	
+	++TLB_AccCount;	
 }
 
 
-
+/********** TLB FAULTS - HARDWARE **********/
+//returns the count value of TLB fats
 int MemoryManagementUnit:: TLBFaults()
 {
-	return TLB_Faults;//counts how many tlb faults
+	return TLB_Faults;
 }
 
 
+
+/********** ADD TLB FAULTS - HARDWRAE **********/
+//incremets count for TLB faults
 void MemoryManagementUnit::addTLBFaults()
 {
 	++TLB_Faults;
 } 
-//In hardware.h it should be:
-//bool operator=( const MemoryManagementUnit& ) const;
-/*
-bool MemoryManagementUnit:: operator=( const MemoryManagementUnit & a ) const
-{
-	
-}
-*/
 
-//TLB
-//int MemoryManagementUnit::readTLBtable(int x, Ram& r)
+
+
+/********** READ TLB TABLE - HARDWRAE **********/
 int MemoryManagementUnit::readTLBTable(int x)
 {
-tlbEntry e;
+	tlbEntry e;
 	for(int i = 0; i < 16; ++i)
 	{
 		if(tBuffer[i].pageNumber == x)
@@ -311,160 +346,205 @@ tlbEntry e;
 	e = m.readPageTable(x,r,u);
 	Replace(e);
 	cout << "didn't find e in tlb table, did replace, returning " << e.frameNumber << endl;	
-*/
-}
-return 0;
+*/	
+	}
+	return 0;
 }
 
-void MemoryManagementUnit::updateUsageLRU(tlbEntry x){
-for(int i = x.pageNumber; i<15; ++i)
+
+/********** UPDATE USAGE LRU - HARDWARE **********/
+//TLB replacement algorithms - LRU
+void MemoryManagementUnit::updateUsageLRU(tlbEntry x)
 {
-	tBuffer[i].pageNumber = tBuffer[i+1].pageNumber;
-	tBuffer[i].frameNumber = tBuffer[i+1].frameNumber;
-}
-tBuffer[15] = x;
-	
+	for(int i = x.pageNumber; i<15; ++i)
+	{
+		tBuffer[i].pageNumber = tBuffer[i+1].pageNumber;	//?
+		tBuffer[i].frameNumber = tBuffer[i+1].frameNumber;	//?
+	}
+	tBuffer[15] = x;
 }
   
 
-void MemoryManagementUnit::Replace(tlbEntry e){
-	for(int i = 0; i < 15; i++){
-	tBuffer[i] = tBuffer[i+1];
-}
-tBuffer[15] = e;
-//cout << "putting page " << e.pageNumber << " which is frame " << e.frameNumber << "at the end of tlb table.\n";
-}
-
-void MemoryManagementUnit::clearTLB(){
-for(int i = 0; i < 16; ++i)
+/********** REPLACE - HARDWARE **********/
+//TLB replcement algorithm - FIFO
+void MemoryManagementUnit::Replace(tlbEntry e)
 {
-	tBuffer[i].pageNumber = -1;
-	tBuffer[i].frameNumber = -1;	
+	for(int i = 0; i < 15; i++)
+	{
+		tBuffer[i] = tBuffer[i+1];	//?
+	}
+	
+	tBuffer[15] = e;
+	//cout << "putting page " << e.pageNumber << " which is frame " << e.frameNumber << "at the end of tlb table.\n";	//DELETE
 }
+
+
+/********** CLEAR TLB **********/
+//clears TLB entries
+void MemoryManagementUnit::clearTLB()
+{
+	for(int i = 0; i < 16; ++i)
+	{
+		tBuffer[i].pageNumber = -1;	//?
+		tBuffer[i].frameNumber = -1;	//?
+	}
 }
-//end of Memory Management Unit
 
 
 
-
-//backing store
+/********** BACKING STORE CONSTRUCTOR - HARWARE **********/
 BackingStore::BackingStore()
 {
-
+	//Should open the backing_store.bin here
 
 }
 
 
+
+/********** ~BACKING STORE DESTRUCTOR - HARDWARE **********/
 BackingStore:: ~BackingStore()
 {
+	//should cloe the backing_store.bin file
 }
 
+
 /*
-BackingStore BackingStore::instance()
+BackingStore BackingStore::instance()		//DELETE
 {
 }
 */
 /*
-bool BackingStore :: opertor=()
+bool BackingStore :: opertor=()			//DELETE
 {
 }
 */
 
-void BackingStore :: read(int p, Frame fT[256])
-{
-	//if reading a frame at a time
-	
-	//x= read from backing store code
-	//fT[p] = x;
 
-	//if can't read frame at a time
+/********** READ - HARWARE **********/
+//reads from the backing_store.bin file
+void BackingStore :: read(int p, Frame fT[256])	
+{
+	//if reading a frame at a time			//DELETE
+	//x= read from backing store code		//DELETE
+	//fT[p] = x;					//DELETE
+	//if can't read frame at a time			//DELETE
+	//fT[p].fillFrame();				//DELETE
+	//in fill frame, do a for loop that will fill in the individual bits as they are read out.	//DELETE
+	//cout << "got into backingstore read\n";	//DELETE
+	//unsigned char x;// = fT[p].readFrame();	//DELETE
+	//cout << "got a value in for x\n";		//DELETE
 	
-	//fT[p].fillFrame();
-	//in fill frame, do a for loop that will fill in the individual bits as they are read out.
-//	cout << "got into backingstore read\n";	
-	//unsigned char x;// = fT[p].readFrame();
-//	cout << "got a value in for x\n";
-	int y = p*256;
-//	cout << "got a value in for y\n";	
-	//ifstream file ("BACKING_STORE.bin", ios::in|ios::binary|ios::ate);
-	ifstream file;	
-	file.open("BACKING_STORE.bin", ios::in|ios::binary);
-//	cout << "opened the .bin file\n";	
-	if(file.is_open())
-		file.seekg(y);
-	char * buffer = new char [256];
-	unsigned char * buff = new unsigned char [256];
-		file.read(buffer,256);
-//	memcpy( &x, &y, 255);
-//	cout << "did memcpy\n";
-	buff = reinterpret_cast<unsigned char*> (buffer);
-	fT[p].fillFrame(buff);
-//	cout << "ft[p].fillframe did its work.\n";
-	file.close();
-//	cout << "file closed.\n";
-//	
+	int y = p*256;						//?
+	
+	//cout << "got a value in for y\n";		//DELETE
+	//ifstream file ("BACKING_STORE.bin", ios::in|ios::binary|ios::ate);	//DELETE
+	
+	ifstream file;						//?
+	file.open("BACKING_STORE.bin", ios::in|ios::binary);	//Opens binary file
+	
+	//cout << "opened the .bin file\n";			//DELETE
+	
+	if(file.is_open())					//????????? should this need curly brackets?
+		file.seekg(y);					//seeks bin file
+		char * buffer = new char [256];			//??
+		unsigned char * buff = new unsigned char [256];	//?
+		file.read(buffer,256);				//reads ???
+	
+	//memcpy( &x, &y, 255);				//DELETE
+	//cout << "did memcpy\n";			//DELETE
+	
+	buff = reinterpret_cast<unsigned char*> (buffer);	//converts signed chars to unsigned char
+	fT[p].fillFrame(buff);					//?
+	
+	//cout << "ft[p].fillframe did its work.\n";	//DELETE
+	
+	file.close();					//closes binary file
+	
+	//cout << "file closed.\n";			//DELETE
+
 }
 
 
 
+
+/********** RAM - HARDWARE **********/
 //Ram
-RAM::RAM(){
-for(int i = 0; i<256; ++i){
-	arrStatus[i].frameNumber = i;
-	//cout << "created a frame # " << arrStatus[i].frameNumber << "\taccessed is " << arrStatus[i].accessed << "\tdirty is " << arrStatus[i].dirty << endl;
-}
-	//cout << "created a ram ";
-	//	for(int i = 0; i < frameSize; ++i)
-	//		cout << "frame " << i << " created and has value of " << framesTable[i].data << endl;
+RAM::RAM()
+{
+	for(int i = 0; i<256; ++i)
+	{
+		arrStatus[i].frameNumber = i;		//sets status for frame number i
+		//cout << "created a frame # " << arrStatus[i].frameNumber << "\taccessed is " << arrStatus[i].accessed << "\tdirty is " << arrStatus[i].dirty << endl;
+	}
+	
+	//cout << "created a ram ";			//DELETE
+	//for(int i = 0; i < frameSize; ++i)		//DELETE
+	//cout << "frame " << i << " created and has value of " << framesTable[i].data << endl;		//DELETE
 }
 
 
 /*
-RAM RAM::instance()
+RAM RAM::instance()				//DELETE
 {
 }
 */
 /*
-//bool operator=();
-Bool RAM::operator=()
+//bool operator=();				//DELETE
+Bool RAM::operator=()				//DELETE
 {
 }
 */
 
-//idk if this is correct
+
+
+/********** READ - HARDWARE **********/
 unsigned char RAM::read(int f, int o)
 {
-return framesTable[f].readFrame(o);
+	return framesTable[f].readFrame(o);	//returns 
 }
 
-unsigned char Frame:: readFrame(int o){
+
+
+/********** READ FRAME - HARDWARE **********/
+unsigned char Frame:: readFrame(int o)
+{
 	//cout << "entered into readFrame\n";	
 	//for (int i = 0; i < 256; ++i)
-		 return data[o];
-return 0;
+	return data[o];				//return
+	return 0;				//return
 }
 
-int RAM::FreeFrames(int p, BackingStore b) //tells us which frame is dirty, this is used to 
+
+
+/********** FREE FRAMES - HARDWRAE **********/
+//Uses hardware to inform if the frame is dirty ??????
+int RAM::FreeFrames(int p, BackingStore b) 
 {
-	for (int i = 0; i < 256; ++i){
-		if(arrStatus[i].dirty == true)
+	for (int i = 0; i < 256; ++i)
+	{
+		if(arrStatus[i].dirty == true)	
 		{	
-			//cout << "no seg fault before freeFrames\n";
-			b.read(p, framesTable);
-			//cout << "returned from backing store read\n";
-			arrStatus[i].dirty = false;
-			//cout << "set the dirty bit to false\n";
-			arrStatus[i].accessed = false;
-			//cout << "set the accessed to false\n"; 
+			//cout << "no seg fault before freeFrames\n";			//DELETE
+			b.read(p, framesTable);					//reads 
+			//cout << "returned from backing store read\n";			//DELETE
+			arrStatus[i].dirty = false;				//???
+			//cout << "set the dirty bit to false\n";			//DELETE
+			arrStatus[i].accessed = false;				//???
+			//cout << "set the accessed to false\n"; 			//DELETE
 			return i;
 		}
-}	
-
-return 0;
+	}	
+	return 0;
 }
 
-void Frame::fillFrame(unsigned char x[]){
-for(int i = 0; i<256; ++i){
-	data[i] = x[i];
-}
+
+
+/********** FILL FRAME - HARDWARE **********/
+//used to get free frame
+void Frame::fillFrame(unsigned char x[])
+{
+	for(int i = 0; i<256; ++i)
+	{
+		data[i] = x[i];
+	}
 }
