@@ -355,10 +355,10 @@ void BackingStore :: read(int p, Frame fT[256])
 		file.seekg(y);						//seeks bin file
 		char * buffer = new char [256];				//allocate new memory to read the file into
 		unsigned char * buff = new unsigned char [256];		//allocate new memory to reinterpret cast the data read from file
-		file.read(buffer,256);					//reads buffer
-	}							
-	buff = reinterpret_cast<unsigned char*> (buffer);		//converts signed chars to unsigned char
-	fT[p].fillFrame(buff);						//filling frames table entry with the frame we just got
+		file.read(buffer,256);					//reads buffer						
+		buff = reinterpret_cast<unsigned char*> (buffer);		//converts signed chars to unsigned char
+		fT[p].fillFrame(buff);	
+	}						//filling frames table entry with the frame we just got
 	file.close();							//closes binary file
 }
 
