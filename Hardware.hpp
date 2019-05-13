@@ -50,6 +50,17 @@ struct address
 
 
 
+/********** FRAME **********/
+// will be used in the class type RAM
+struct Frame
+{
+	void fillFrame(unsigned char[]);	/*fills a single frame with an unsigned char once the char is pulled from memory or bin file*/
+	unsigned char readFrame(int);		//
+	unsigned char data[256];		//
+};
+
+
+
 /********** BACKING STOE **********/
 //Loads the needed frames from the Backing_Store.bin file
 //will only be used when a page fault occurs
@@ -64,16 +75,6 @@ class BackingStore
 		void read(int, Frame[]);	/*function used to read from the backing_store bin, will recieve an int and the frame eing worked on*/
 };
 
-
-
-/********** FRAME **********/
-// will be used in the class type RAM
-struct Frame
-{
-	void fillFrame(unsigned char[]);	/*fills a single frame with an unsigned char once the char is pulled from memory or bin file*/
-	unsigned char readFrame(int);		//
-	unsigned char data[256];		//
-};
 
 
 
